@@ -22,7 +22,7 @@ export default function Login() {
     setLoading(true);
     await new Promise(r => setTimeout(r, 1000));
     
-    const res = login(email, password);
+    const res = login({ email, password });
     if (res.success) {
       navigate('/usuario');
     } else {
