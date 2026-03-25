@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  --color-black: #0F1113;
+  --color-gold: #AF944F;
+  --color-gold-light: #D4AF37;
+  --color-off-white: #FCFBFA;
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  /* V6 Spacing System */
+  --spacing-section-desktop: 100px;
+  --spacing-section-mobile: 56px;
+  --spacing-container-desktop: 40px;
+  --spacing-container-mobile: 20px;
+  
+  --radius-standard: 18px;
+  --radius-button: 14px;
+  --radius-card: 24px;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-[#0F1113] font-sans antialiased overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Mandatory Padding Container (V6) */
+  .container-luxe {
+    @apply w-full max-w-[1240px] mx-auto px-[20px] md:px-[40px];
+  }
+  
+  /* Section with Spacing (V6) */
+  .section-luxe {
+    @apply py-[56px] md:py-[100px] border-b border-black/5 last:border-0;
+  }
+  
+  .italic-serif {
+    @apply font-serif italic font-medium;
+  }
+  
+  /* Reveal Animations */
+  .editorial-reveal {
+    @apply opacity-0 translate-y-12 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)];
+  }
+  
+  .editorial-reveal.visible {
+    @apply opacity-100 translate-y-0;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.shadow-premium {
+  box-shadow: 
+    0 10px 15px -3px rgba(0, 0, 0, 0.08), 
+    0 4px 6px -4px rgba(0, 0, 0, 0.08),
+    0 20px 25px -5px rgba(0, 0, 0, 0.03);
+}
+
+.shadow-luxe {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-luxe-hover {
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+    0 8px 10px -6px rgba(0, 0, 0, 0.1),
+    0 35px 50px -12px rgba(0, 0, 0, 0.05);
+}
+
+/* LUXURY CONTRAST */
+.bg-luxury-gray {
+  background-color: #F5F5F7;
+}
