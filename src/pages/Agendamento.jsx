@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Calendar as CalendarIcon, Clock, ChevronRight, ChevronLeft, 
@@ -29,12 +29,22 @@ export default function Agendamento() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const confirmBtnRef = useRef(null);
   useReveal();
 
   const slots = useMemo(() => {
     if (!selectedService || !selectedDate) return [];
     return generateSlots(selectedDate, selectedService.duration, bookings);
   }, [selectedDate, selectedService, bookings]);
+
+  useEffect(() => {
+    if (selectedSlot && window.innerWidth < 1024) {
+      const btn = document.getElementById('confirm-booking-btn');
+      if (btn) {
+        btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [selectedSlot]);
 
   const days = useMemo(() => {
     const start = startOfMonth(currentMonth);
@@ -274,6 +284,7 @@ export default function Agendamento() {
                     </div>
                     
                     <Button 
+                      id="confirm-booking-btn"
                       onClick={handleBooking} 
                       disabled={!selectedService || !selectedSlot} 
                       className="w-full shadow-premium" 

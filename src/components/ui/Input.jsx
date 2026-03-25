@@ -16,8 +16,8 @@ const Input = ({ label, error, className = '', ...props }) => {
           px-[20px] 
           py-[14px] 
           rounded-[16px] 
-          text-gray-900 
-          placeholder:text-gray-300
+          text-[#0F1113] 
+          placeholder:text-gray-400
           focus:outline-none 
           focus:border-[#B8787A]/30
           focus:ring-4 

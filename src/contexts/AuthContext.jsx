@@ -32,6 +32,7 @@ export function AuthProvider({ children }) {
       password,
       phone: phone || '',
       role: 'client',
+      balance: 0,
       createdAt: new Date().toISOString(),
       preferredColor: null,
     };
