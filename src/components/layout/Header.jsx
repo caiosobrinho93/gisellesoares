@@ -58,6 +58,11 @@ export default function Header() {
         <div className="hidden lg:flex items-center gap-6">
           {user ? (
             <div className="flex items-center gap-4">
+              {user.role === 'admin' && (
+                <Link to="/admin" className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#AF944F] hover:text-[#0F1113] transition-all">
+                  Dashboard
+                </Link>
+              )}
               <Link to="/usuario" className="w-12 h-12 flex items-center justify-center bg-[#0F1113] text-white rounded-xl hover:bg-[#AF944F] transition-all shadow-lg group">
                  <User size={18} />
               </Link>
