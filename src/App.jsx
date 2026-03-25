@@ -27,7 +27,7 @@ function Layout({ children }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/gisellesoares/">
       <AuthProvider>
         <AppProvider>
           <Routes>
