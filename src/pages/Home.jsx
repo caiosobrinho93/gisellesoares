@@ -170,7 +170,7 @@ export default function Home() {
             <Star className="mx-auto mb-12 text-[#AF944F] group-hover:scale-110 transition-transform duration-700" size={48} strokeWidth={1} />
             <h2 className="text-6xl md:text-8xl font-serif font-black text-white mb-10 tracking-tighter">Vivencie a Exclusividade.</h2>
             <p className="text-2xl font-light text-gray-400 mb-20 max-w-3xl mx-auto italic-serif leading-relaxed">
-               Nossa agenda é limitada para garantir a atenção absoluta que cada detalhe merece. Sua reserva é o início de um ritual.
+               Nossa agenda é limitada para garantir a atenção absoluta que cada detalhe merece. Sua reserva é o início de um atendimento.
             </p>
             <Button as={Link} to="/agendar" variant="secondary" size="xl" className="shadow-premium px-20">Solicitar Horário</Button>
             

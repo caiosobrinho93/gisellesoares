@@ -9,15 +9,18 @@ export function AppProvider({ children }) {
   const [services, setServices] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [gallery, setGallery] = useState([]);
+  const [giftCards, setGiftCards] = useState([]);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     const savedServices = storage.get('services', defaultServices);
     const savedBookings = storage.get('bookings', []);
     const savedGallery = storage.get('gallery', initialGallery);
+    const savedGiftCards = storage.get('giftCards', []);
     setServices(savedServices);
     setBookings(savedBookings);
     setGallery(savedGallery);
+    setGiftCards(savedGiftCards);
     setInitialized(true);
   }, []);
 
@@ -72,6 +75,11 @@ export function AppProvider({ children }) {
     updateBooking(id, { status: 'cancelled' });
   };
 
+  const deleteBooking = (id) => {
+    const newList = bookings.filter(b => b.id !== id);
+    saveBookings(newList);
+  };
+
   const completeBooking = (id) => {
     updateBooking(id, { status: 'completed' });
   };
@@ -81,6 +89,39 @@ export function AppProvider({ children }) {
       new Date(b.datetime) - new Date(a.datetime)
     );
   }, [bookings]);
+
+  // --- Gift Cards ---
+  const saveGiftCards = (newList) => {
+    setGiftCards(newList);
+    storage.set('giftCards', newList);
+  };
+
+  const addGiftCard = (card) => {
+    const newCard = {
+      ...card,
+      id: Date.now().toString(),
+      code: Math.random().toString(36).substring(2, 8).toUpperCase(),
+      status: 'active',
+      createdAt: new Date().toISOString(),
+    };
+    const newList = [...giftCards, newCard];
+    saveGiftCards(newList);
+    return newCard;
+  };
+
+  const deleteGiftCard = (id) => {
+    const newList = giftCards.filter(c => c.id !== id);
+    saveGiftCards(newList);
+  };
+
+  const redeemGiftCard = (code, userId) => {
+    const card = giftCards.find(c => c.code === code && c.status === 'active');
+    if (!card) return { success: false, error: 'Código inválido ou já utilizado.' };
+    
+    const newList = giftCards.map(c => c.code === code ? { ...c, status: 'redeemed', redeemedBy: userId, redeemedAt: new Date().toISOString() } : c);
+    saveGiftCards(newList);
+    return { success: true, amount: card.amount, message: `Gift card de R$ ${card.amount} resgatado com sucesso!` };
+  };
 
   // --- Gallery ---
   const saveGallery = (newGallery) => {
@@ -130,8 +171,9 @@ export function AppProvider({ children }) {
     <AppContext.Provider value={{
       initialized,
       services, addService, updateService, deleteService, getService,
-      bookings, addBooking, updateBooking, cancelBooking, completeBooking, getUserBookings,
+      bookings, addBooking, updateBooking, cancelBooking, deleteBooking, completeBooking, getUserBookings,
       gallery, addGalleryImage, deleteGalleryImage,
+      giftCards, addGiftCard, deleteGiftCard, redeemGiftCard,
       getFinancials, getAllUsers,
     }}>
       {children}
