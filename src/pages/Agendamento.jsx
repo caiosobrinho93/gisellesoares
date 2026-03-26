@@ -239,7 +239,7 @@ export default function Agendamento() {
           </div>
 
           {/* RIGHT: SUMMARY SIDEBAR */}
-          <div className="lg:col-span-4 sticky top-40">
+          <div className="lg:col-span-4 lg:sticky lg:top-40">
             <div className="bg-noir p-12 rounded-[24px] shadow-premium border border-white/5 space-y-12 editorial-reveal">
               {/* GISELLE PHOTO INTEGRATION */}
               <div className="relative -mt-6 -mx-6 mb-12 h-48 rounded-t-[18px] overflow-hidden group">
@@ -279,7 +279,7 @@ export default function Agendamento() {
               </div>
 
               <div className="pt-10 border-t-2 border-dashed border-white/10 pb-4">
-                <div className="flex justify-between items-center mb-10">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
                   <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-white">Investimento</span>
                   <span className="text-4xl font-serif font-black text-gold">R$ {(selectedService?.price || 0).toFixed(2)}</span>
                 </div>

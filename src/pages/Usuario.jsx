@@ -227,7 +227,7 @@ export default function Usuario() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.08 }}
                   >
-                    <Card padding={false} className="p-8 md:p-12 hover:shadow-2xl transition-all duration-700 border border-white/5 rounded-[32px] md:rounded-[40px] bg-noir">
+                    <Card padding={false} className="p-8 md:p-12 hover:shadow-2xl transition-all duration-700 border border-black/5 rounded-[32px] md:rounded-[40px] bg-white">
                       <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                         <div className="flex-1">
                           <div className="flex flex-wrap items-center gap-4 mb-6">
@@ -236,26 +236,26 @@ export default function Usuario() {
                             </span>
                             {b.status === 'Confirmado' && <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />}
                           </div>
-                          <h3 className="text-3xl md:text-5xl font-serif font-black text-white mb-6 tracking-tighter">{b.serviceName}</h3>
+                          <h3 className="text-3xl md:text-5xl font-serif font-black text-[#0F1113] mb-6 tracking-tighter">{b.serviceName}</h3>
                           <div className="flex flex-wrap gap-4">
-                            <div className="flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/5">
-                              <Calendar size={16} className="text-gold shrink-0" />
-                              <span className="text-[12px] font-black uppercase tracking-[0.15em]">
+                            <div className="flex items-center gap-3 bg-gray-50 px-5 py-3 rounded-2xl border border-black/5">
+                              <Calendar size={16} className="text-[#AF944F] shrink-0" />
+                              <span className="text-[12px] font-black uppercase tracking-[0.15em] text-[#0F1113]">
                                 {b.datetime ? format(new Date(b.datetime), "dd 'de' MMMM", { locale: ptBR }) : '--'}
                               </span>
                             </div>
-                            <div className="flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/5">
-                              <Clock size={16} className="text-gold shrink-0" />
-                              <span className="text-[12px] font-black uppercase tracking-[0.15em] text-gold">
+                            <div className="flex items-center gap-3 bg-gray-50 px-5 py-3 rounded-2xl border border-black/5">
+                              <Clock size={16} className="text-[#AF944F] shrink-0" />
+                              <span className="text-[12px] font-black uppercase tracking-[0.15em] text-[#AF944F]">
                                 {b.datetime ? format(new Date(b.datetime), "HH:mm") : '--'}
                               </span>
                             </div>
                           </div>
                         </div>
-                        <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-6 pt-6 md:pt-0 border-t border-white/5 md:border-0">
+                        <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-6 pt-6 md:pt-0 border-t border-black/5 md:border-0">
                           <div className="text-left md:text-right">
-                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-500 mb-1">Valor</p>
-                            <p className="text-3xl md:text-5xl font-serif font-black text-white">R$ {(b.price || 0).toFixed(0)}</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-400 mb-1">Valor</p>
+                            <p className="text-3xl md:text-5xl font-serif font-black text-[#0F1113]">R$ {(b.price || 0).toFixed(0)}</p>
                           </div>
                           {b.status === 'Confirmado' && (
                             <button
@@ -264,8 +264,8 @@ export default function Usuario() {
                               title={!canCancel ? "Cancelamento apenas com 6h de antecedência" : "Cancelar"}
                               className={`min-h-[44px] px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest border transition-all ${
                                 canCancel
-                                  ? 'border-red-500/30 text-red-400 hover:bg-red-500/10'
-                                  : 'border-white/5 text-gray-700 cursor-not-allowed opacity-40'
+                                  ? 'border-red-500/30 text-red-500 hover:bg-red-500/10'
+                                  : 'border-black/5 text-gray-300 cursor-not-allowed opacity-40'
                               }`}
                             >
                               {canCancel ? 'Cancelar' : 'Bloqueado'}
