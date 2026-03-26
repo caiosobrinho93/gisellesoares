@@ -367,6 +367,17 @@ export default function Admin() {
       setImageAlt('');
     };
 
+    const handleFileUpload = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        addGalleryImage({ url: reader.result, alt: imageAlt || 'Upload Giselle Soares' });
+      };
+      reader.readAsDataURL(file);
+    };
+
     const handleSaveEdit = (id) => {
       updateGalleryImage(id, { alt: editAlt });
       setEditingImg(null);
@@ -377,26 +388,45 @@ export default function Admin() {
         <div className="bg-noir p-8 md:p-10 rounded-[32px] border border-white/5 shadow-premium space-y-6">
           <h3 className="text-2xl font-black text-white uppercase">Adicionar <span className="text-gold">Imagem</span></h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">URL da Imagem</label>
-              <input
-                value={imageUrl}
-                onChange={e => setImageUrl(e.target.value)}
-                className="w-full p-4 bg-black border border-white/5 rounded-2xl text-white text-sm font-sans focus:ring-1 focus:ring-gold outline-none"
-                placeholder="https://..."
-              />
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">URL da Imagem</label>
+                <input
+                  value={imageUrl}
+                  onChange={e => setImageUrl(e.target.value)}
+                  className="w-full p-4 bg-black border border-white/5 rounded-2xl text-white text-sm font-sans focus:ring-1 focus:ring-gold outline-none"
+                  placeholder="https://..."
+                />
+              </div>
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                  <div className="w-full border-t border-white/5"></div>
+                </div>
+                <div className="relative flex justify-center text-xs uppercase font-black text-gray-600">
+                  <span className="bg-noir px-4">Ou Upload Local</span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Selecionar Aquivo</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="w-full p-4 bg-black border border-white/5 rounded-2xl text-white text-sm font-sans focus:ring-1 focus:ring-gold file:bg-gold file:text-black file:border-0 file:px-4 file:py-1 file:rounded-lg file:mr-4 file:font-black file:uppercase file:text-[10px] cursor-pointer"
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Legenda / Descrição</label>
-              <input
+              <textarea
                 value={imageAlt}
                 onChange={e => setImageAlt(e.target.value)}
-                className="w-full p-4 bg-black border border-white/5 rounded-2xl text-white text-sm font-sans focus:ring-1 focus:ring-gold outline-none"
+                className="w-full p-4 bg-black border border-white/5 rounded-2xl text-white text-sm font-sans focus:ring-1 focus:ring-gold outline-none h-[148px] resize-none"
                 placeholder="Ex: Esmaltação Nude Gel"
               />
             </div>
           </div>
-          <Button onClick={handleAdd} variant="secondary" className="min-h-[48px] px-8">Adicionar à Galeria</Button>
+          <Button onClick={handleAdd} variant="secondary" className="min-h-[48px] px-8" disabled={!imageUrl}>Adicionar via URL</Button>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -738,6 +768,7 @@ export default function Admin() {
               {activeTab === item.id && <motion.div layoutId="active-pill" className="absolute left-0 w-1 h-6 bg-black/20 rounded-full" />}
             </button>
           ))}
+          <div className="h-10" aria-hidden="true" />
         </nav>
 
         <div className="p-3 border-t border-white/5 space-y-1">

@@ -13,7 +13,7 @@ import {
 import { ptBR } from 'date-fns/locale';
 import { useApp } from '../contexts/AppContext';
 import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Section, { Container } from '../components/ui/Section';
@@ -24,12 +24,20 @@ export default function Agendamento() {
   const { services, addBooking, bookings } = useApp();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [step, setStep] = useState(1);
   const [selectedService, setSelectedService] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const confirmBtnRef = useRef(null);
+
+  useEffect(() => {
+    if (location.state?.selectedService) {
+      setSelectedService(location.state.selectedService);
+      setStep(2);
+    }
+  }, [location.state]);
   useReveal();
 
   const slots = useMemo(() => {

@@ -10,6 +10,7 @@ export function AppProvider({ children }) {
   const [bookings, setBookings] = useState([]);
   const [gallery, setGallery] = useState([]);
   const [giftCards, setGiftCards] = useState([]);
+  const [users, setUsers] = useState([]);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
@@ -17,11 +18,27 @@ export function AppProvider({ children }) {
     const savedBookings = storage.get('bookings', []);
     const savedGallery = storage.get('gallery', initialGallery);
     const savedGiftCards = storage.get('giftCards', []);
+    const savedUsers = storage.get('users', []);
     setServices(savedServices);
     setBookings(savedBookings);
     setGallery(savedGallery);
     setGiftCards(savedGiftCards);
+    setUsers(savedUsers);
     setInitialized(true);
+  }, []);
+
+  // Listen for storage changes to sync users
+  useEffect(() => {
+    const handleStorage = (e) => {
+      if (e.key === 'users') {
+        setUsers(storage.get('users', []));
+      }
+      if (e.key === 'bookings') {
+        setBookings(storage.get('bookings', []));
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
   // --- Services ---
@@ -148,7 +165,7 @@ export function AppProvider({ children }) {
   }, [bookings]);
 
   // --- Users (admin) ---
-  const getAllUsers = () => storage.get('users', []);
+  const getAllUsers = () => users;
 
   return (
     <AppContext.Provider value={{
@@ -157,7 +174,7 @@ export function AppProvider({ children }) {
       bookings, addBooking, updateBooking, cancelBooking, deleteBooking, completeBooking, getUserBookings,
       gallery, addGalleryImage, updateGalleryImage, deleteGalleryImage,
       giftCards, addGiftCard, deleteGiftCard, redeemGiftCard,
-      getFinancials, getAllUsers,
+      getFinancials, getAllUsers, users,
     }}>
       {children}
     </AppContext.Provider>

@@ -227,7 +227,7 @@ export default function Usuario() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.08 }}
                   >
-                    <Card padding={false} className="p-8 md:p-12 hover:shadow-2xl transition-all duration-700 border border-white/5 rounded-[32px] md:rounded-[40px] bg-noir shadow-premium">
+                    <Card padding={false} className="bg-noir border border-white/5 p-8 md:p-10 shadow-premium relative overflow-hidden group">
                       <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                         <div className="flex-1">
                           <div className="flex flex-wrap items-center gap-4 mb-6">

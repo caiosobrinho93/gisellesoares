@@ -131,7 +131,13 @@ export default function Home() {
             {services.map((s) => (
               <button
                 key={s.id}
-                onClick={() => setSelectedService(s)}
+                onClick={() => {
+                  if (!user) {
+                    navigate('/login', { state: { from: '/agendar', selectedService: s } });
+                  } else {
+                    navigate('/agendar', { state: { selectedService: s } });
+                  }
+                }}
                 className="group flex flex-col text-left hover:-translate-y-2 transition-all duration-500"
               >
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] mb-6 shadow-2xl border border-white/5">
