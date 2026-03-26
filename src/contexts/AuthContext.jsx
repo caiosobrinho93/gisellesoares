@@ -28,6 +28,10 @@ export function AuthProvider({ children }) {
     return () => window.removeEventListener('storage', rehydrate);
   }, []);
 
+  const notifySync = (key) => {
+    window.dispatchEvent(new StorageEvent('storage', { key }));
+  };
+
   const register = ({ name, email, password, phone }) => {
     const users = storage.get('users', []);
     if (users.find(u => u.email === email)) {
@@ -47,6 +51,7 @@ export function AuthProvider({ children }) {
     };
     storage.set('users', [...users, newUser]);
     storage.set('session', { id: newUser.id });
+    notifySync('users');
     setUser(newUser);
     return { success: true };
   };
@@ -79,6 +84,7 @@ export function AuthProvider({ children }) {
     storage.set('users', newUsers);
     // Also update session if needed
     storage.set('session', { id: updated.id });
+    notifySync('users');
     setUser(updated);
     return { success: true };
   };

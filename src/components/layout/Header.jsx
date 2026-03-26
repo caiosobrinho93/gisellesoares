@@ -138,7 +138,7 @@ export default function Header() {
               )}
             </nav>
 
-            <div className="mt-auto flex flex-col gap-4">
+            <div className="mt-auto pt-16 flex flex-col gap-4 border-t border-black/5">
               {user && (
                 <Button as={Link} to="/usuario" variant="primary" size="lg" className="w-full py-6">Minha Área</Button>
               )}

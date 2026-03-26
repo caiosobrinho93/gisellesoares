@@ -46,6 +46,8 @@ export function AppProvider({ children }) {
     setServices(newServices);
     storage.set('services', newServices);
   };
+  const refreshUsers = () => setUsers(storage.get('users', []));
+  const refreshBookings = () => setBookings(storage.get('bookings', []));
   const addService = (service) => {
     const id = Date.now().toString();
     saveServices([...services, { ...service, id, active: true }]);
@@ -174,7 +176,7 @@ export function AppProvider({ children }) {
       bookings, addBooking, updateBooking, cancelBooking, deleteBooking, completeBooking, getUserBookings,
       gallery, addGalleryImage, updateGalleryImage, deleteGalleryImage,
       giftCards, addGiftCard, deleteGiftCard, redeemGiftCard,
-      getFinancials, getAllUsers, users,
+      getFinancials, getAllUsers, users, refreshUsers, refreshBookings,
     }}>
       {children}
     </AppContext.Provider>
