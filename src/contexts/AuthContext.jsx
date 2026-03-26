@@ -9,15 +9,27 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Auto-login from persisted session
-    const session = storage.get('session');
-    if (session) {
-      const users = storage.get('users', []);
-      const found = users.find(u => u.id === session.id) ||
-        (session.id === 'admin' ? defaultAdmin : null);
-      if (found) setUser(found);
-    }
-    setLoading(false);
+    // Rehydrate session from localStorage
+    const rehydrate = () => {
+      const session = storage.get('session');
+      if (session) {
+        const users = storage.get('users', []);
+        const found = users.find(u => u.id === session.id) ||
+          (session.id === 'admin' ? defaultAdmin : null);
+        
+        if (found) {
+          setUser(found);
+        } else {
+          storage.remove('session');
+        }
+      }
+      setLoading(false);
+    };
+    
+    rehydrate();
+    // Listen for storage changes (tabs sync)
+    window.addEventListener('storage', rehydrate);
+    return () => window.removeEventListener('storage', rehydrate);
   }, []);
 
   const register = ({ name, email, password, phone }) => {

@@ -62,59 +62,59 @@ export default function Admin() {
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {stats.map((s, i) => (
-          <div key={i} className="p-10 border border-black/5 hover:border-black transition-all duration-700 bg-white group rounded-[32px] shadow-premium">
-            <div className="flex justify-between items-start mb-8 text-gray-300 group-hover:text-[#AF944F] transition-colors">
+          <div key={i} className="p-10 border border-white/5 hover:border-gold/30 transition-all duration-700 bg-noir group rounded-[32px] shadow-premium">
+            <div className="flex justify-between items-start mb-8 text-gray-500 group-hover:text-gold transition-colors">
               <s.icon size={20} />
-              <span className="text-[10px] font-black font-sans text-black">{s.change}</span>
+              <span className="text-[10px] font-black font-sans text-gold">{s.change}</span>
             </div>
-            <p className="text-[10px] font-black font-sans uppercase tracking-[0.4em] text-gray-400 mb-2">{s.label}</p>
-            <p className="text-4xl font-serif font-black tracking-tighter text-black">{s.value}</p>
+            <p className="text-[10px] font-black font-sans uppercase tracking-[0.4em] text-gray-500 mb-2">{s.label}</p>
+            <p className="text-4xl font-serif font-black tracking-tighter text-white">{s.value}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-         <div className="bg-white p-10 rounded-[32px] border border-black/5 shadow-premium">
-            <h3 className="text-3xl font-serif font-black mb-10 text-[#0F1113]">Agendamentos <span className="italic-serif text-[#AF944F]">Recentes</span></h3>
+         <div className="bg-noir p-10 rounded-[32px] border border-white/5 shadow-premium">
+            <h3 className="text-3xl font-serif font-black mb-10 text-white">Agendamentos <span className="italic-serif text-gold">Recentes</span></h3>
             <div className="space-y-6">
                {bookings.slice(0, 5).map(b => (
                  <button 
                   key={b.id} 
                   onClick={() => setModal({ isOpen: true, type: 'booking', data: b })}
-                  className="w-full flex items-center justify-between p-6 hover:bg-gray-50 rounded-2xl transition-all border border-transparent hover:border-black/5"
+                  className="w-full flex items-center justify-between p-6 hover:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-gold/20"
                  >
                     <div className="flex items-center gap-5">
-                       <div className="w-12 h-12 bg-[#0F1113] text-white flex items-center justify-center font-black rounded-xl shadow-lg">{b.userName?.[0]}</div>
+                       <div className="w-12 h-12 bg-black text-white flex items-center justify-center font-black rounded-xl shadow-lg border border-white/5">{b.userName?.[0]}</div>
                        <div className="text-left">
-                          <p className="text-xs font-black font-sans uppercase tracking-widest">{b.userName}</p>
-                          <p className="text-[11px] text-gray-400 font-light italic-serif">{b.serviceName}</p>
+                          <p className="text-xs font-black font-sans uppercase tracking-widest text-white">{b.userName}</p>
+                          <p className="text-[11px] text-gray-500 font-light italic-serif">{b.serviceName}</p>
                        </div>
                     </div>
                     <div className="text-right">
-                       <p className="text-[10px] font-black font-sans">{format(new Date(b.datetime), "dd MMM, HH:mm")}</p>
-                       <p className={`text-[10px] font-black uppercase tracking-widest ${b.status === 'Cancelado' ? 'text-red-500' : 'text-[#AF944F]'}`}>{b.status}</p>
+                       <p className="text-[10px] font-black font-sans text-white">{format(new Date(b.datetime), "dd MMM, HH:mm")}</p>
+                       <p className={`text-[10px] font-black uppercase tracking-widest ${b.status === 'Cancelado' ? 'text-red-500' : 'text-gold'}`}>{b.status}</p>
                     </div>
                  </button>
                ))}
-               {bookings.length === 0 && <p className="text-center text-gray-300 italic-serif py-16">Nenhum agendamento realizado.</p>}
+               {bookings.length === 0 && <p className="text-center text-gray-500 italic-serif py-16">Nenhum agendamento realizado.</p>}
             </div>
          </div>
-         <div className="bg-white p-10 rounded-[32px] border border-black/5 shadow-premium">
-            <h3 className="text-3xl font-serif font-black mb-10 text-[#0F1113]">Gift Cards <span className="italic-serif text-[#AF944F]">Ativos</span></h3>
+         <div className="bg-noir p-10 rounded-[32px] border border-white/5 shadow-premium">
+            <h3 className="text-3xl font-serif font-black mb-10 text-white">Gift Cards <span className="italic-serif text-gold">Ativos</span></h3>
             <div className="space-y-6">
                {giftCards.filter(c => c.status === 'active').slice(0, 5).map(c => (
-                 <div key={c.id} className="flex items-center justify-between p-6 border border-black/5 rounded-2xl bg-[#FCFBFA]">
+                 <div key={c.id} className="flex items-center justify-between p-6 border border-white/5 rounded-2xl bg-black">
                     <div className="flex items-center gap-5">
-                       <div className="w-12 h-12 bg-[#AF944F]/10 text-[#AF944F] flex items-center justify-center rounded-xl"><Gift size={20} /></div>
+                       <div className="w-12 h-12 bg-gold/10 text-gold flex items-center justify-center rounded-xl"><Gift size={20} /></div>
                        <div>
-                          <p className="text-xs font-black font-sans tracking-[0.2em]">{c.code}</p>
-                          <p className="text-[10px] text-gray-400 font-sans">Criado em {format(new Date(c.createdAt), "dd/MM/yy")}</p>
+                          <p className="text-xs font-black font-sans tracking-[0.2em] text-white">{c.code}</p>
+                          <p className="text-[10px] text-gray-500 font-sans">Criado em {format(new Date(c.createdAt), "dd/MM/yy")}</p>
                        </div>
                     </div>
-                    <p className="text-2xl font-serif font-black text-[#AF944F]">R$ {c.amount}</p>
+                    <p className="text-2xl font-serif font-black text-gold">R$ {c.amount}</p>
                  </div>
                ))}
-               {giftCards.filter(c => c.status === 'active').length === 0 && <p className="text-center text-gray-300 italic-serif py-16">Nenhum gift card ativo no momento.</p>}
+               {giftCards.filter(c => c.status === 'active').length === 0 && <p className="text-center text-gray-500 italic-serif py-16">Nenhum gift card ativo no momento.</p>}
             </div>
          </div>
       </div>
@@ -122,23 +122,23 @@ export default function Admin() {
   );
 
   const BookingsSection = () => (
-    <div className="bg-white rounded-[32px] border border-black/10 shadow-premium overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="p-10 border-b border-black/5 flex justify-between items-center">
-         <h3 className="text-3xl font-serif font-black text-[#0F1113]">Gestão de <span className="italic-serif text-[#AF944F]">Agendamentos</span></h3>
-         <Button variant="outline" size="sm" className="hidden sm:flex"><Download size={14} className="mr-2" /> Exportar</Button>
+    <div className="bg-noir rounded-[32px] border border-white/10 shadow-premium overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="p-10 border-b border-white/5 flex justify-between items-center bg-noir">
+         <h3 className="text-3xl font-serif font-black text-white">Gestão de <span className="italic-serif text-gold">Agendamentos</span></h3>
+         <Button variant="outline" size="sm" className="hidden sm:flex border-white/10 text-white hover:bg-gold hover:text-black"><Download size={14} className="mr-2" /> Exportar</Button>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="bg-[#FCFBFA]">
+          <thead className="bg-black/40">
             <tr>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Cliente</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 hidden md:table-cell">Serviço</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Data & Hora</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 hidden sm:table-cell">Status</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 text-right">Ações</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Cliente</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden md:table-cell">Serviço</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Data & Hora</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden sm:table-cell">Status</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 text-right">Ações</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/5">
+          <tbody className="divide-y divide-white/5">
             {[...bookings].sort((a,b) => new Date(b.datetime) - new Date(a.datetime)).map(b => (
               <tr key={b.id} className="hover:bg-gray-50/50 transition-colors group cursor-pointer" onClick={() => setModal({ isOpen: true, type: 'booking', data: b })}>
                 <td className="px-10 py-8">
@@ -176,35 +176,35 @@ export default function Admin() {
   );
 
   const ClientsSection = () => (
-    <div className="bg-white rounded-[32px] border border-black/10 shadow-premium overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="p-10 border-b border-black/5">
-         <h3 className="text-3xl font-serif font-black text-[#0F1113]">Base de <span className="italic-serif text-[#AF944F]">Clientes</span></h3>
+    <div className="bg-noir rounded-[32px] border border-white/10 shadow-premium overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="p-10 border-b border-white/5 bg-noir">
+         <h3 className="text-3xl font-serif font-black text-white">Base de <span className="italic-serif text-gold">Clientes</span></h3>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-          <thead className="bg-[#FCFBFA]">
+          <thead className="bg-black/40">
             <tr>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Cliente</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 hidden md:table-cell">E-mail</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 hidden sm:table-cell">Telefone</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 hidden lg:table-cell">Cadastro</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 text-right">Ações</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Cliente</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden md:table-cell">E-mail</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden sm:table-cell">Telefone</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden lg:table-cell">Cadastro</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 text-right">Ações</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/5">
+          <tbody className="divide-y divide-white/5">
             {users.map(u => (
-              <tr key={u.id} className="hover:bg-gray-50/50 transition-colors cursor-pointer" onClick={() => setModal({ isOpen: true, type: 'client', data: u })}>
+              <tr key={u.id} className="hover:bg-white/5 transition-colors cursor-pointer" onClick={() => setModal({ isOpen: true, type: 'client', data: u })}>
                 <td className="px-10 py-8">
                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-[#AF944F]/10 text-[#AF944F] flex items-center justify-center font-black text-xs shadow-sm">{u.name?.[0]}</div>
-                      <span className="text-xs font-black font-sans uppercase tracking-[0.1em]">{u.name}</span>
+                      <div className="w-10 h-10 rounded-xl bg-gold/10 text-gold flex items-center justify-center font-black text-xs shadow-sm border border-gold/20">{u.name?.[0]}</div>
+                      <span className="text-xs font-black font-sans uppercase tracking-[0.1em] text-white">{u.name}</span>
                    </div>
                 </td>
-                <td className="px-10 py-8 text-xs text-gray-500 font-sans hidden md:table-cell">{u.email}</td>
-                <td className="px-10 py-8 text-xs text-gray-500 font-sans hidden sm:table-cell">{u.phone || 'N/A'}</td>
-                <td className="px-10 py-8 text-xs text-gray-400 font-light italic-serif hidden lg:table-cell">{format(new Date(u.createdAt || Date.now()), "dd/MM/yyyy")}</td>
+                <td className="px-10 py-8 text-xs text-gray-400 font-sans hidden md:table-cell">{u.email}</td>
+                <td className="px-10 py-8 text-xs text-gray-400 font-sans hidden sm:table-cell">{u.phone || 'N/A'}</td>
+                <td className="px-10 py-8 text-xs text-gray-500 font-light italic-serif hidden lg:table-cell">{format(new Date(u.createdAt || Date.now()), "dd/MM/yyyy")}</td>
                 <td className="px-10 py-8 text-right" onClick={(e) => e.stopPropagation()}>
-                   <button onClick={() => setModal({ isOpen: true, type: 'client', data: u })} className="p-3 text-gray-300 hover:text-black hover:bg-white rounded-xl transition-all">
+                   <button onClick={() => setModal({ isOpen: true, type: 'client', data: u })} className="p-3 text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all">
                     <Search size={16} />
                    </button>
                 </td>
@@ -218,28 +218,28 @@ export default function Admin() {
 
   const GiftCardsSection = () => (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex justify-between items-center bg-white p-10 rounded-[32px] border border-black/5 shadow-premium">
+      <div className="flex justify-between items-center bg-noir p-10 rounded-[32px] border border-white/5 shadow-premium">
          <div>
-            <h3 className="text-3xl font-serif font-black text-[#0F1113]">Gift <span className="italic-serif text-[#AF944F]">Cards</span></h3>
-            <p className="text-xs text-gray-400 font-light italic-serif mt-2">Gestão de códigos e créditos promocionais.</p>
+            <h3 className="text-3xl font-serif font-black text-white">Gift <span className="italic-serif text-gold">Cards</span></h3>
+            <p className="text-xs text-gray-500 font-light italic-serif mt-2">Gestão de códigos e créditos promocionais.</p>
          </div>
-         <Button onClick={() => setModal({ isOpen: true, type: 'add-giftcard' })} variant="primary" size="md">
+         <Button onClick={() => setModal({ isOpen: true, type: 'add-giftcard' })} variant="secondary" size="md" className="shadow-lg">
            <Plus size={16} className="mr-2" /> Gerar Novo
          </Button>
       </div>
 
-      <div className="bg-white rounded-[32px] border border-black/10 shadow-premium overflow-hidden">
+      <div className="bg-noir rounded-[32px] border border-white/10 shadow-premium overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-[#FCFBFA]">
+          <thead className="bg-black/40">
             <tr>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Código</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Valor</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">Status</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 hidden sm:table-cell">Criação</th>
-              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 text-right">Ações</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Código</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Valor</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Status</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden sm:table-cell">Criação</th>
+              <th className="px-10 py-8 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 text-right">Ações</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-black/5">
+          <tbody className="divide-y divide-white/5">
             {giftCards.map(c => (
               <tr key={c.id} className="hover:bg-gray-50/50 transition-colors">
                 <td className="px-10 py-8 text-xs font-black tracking-[0.2em] font-sans">{c.code}</td>
@@ -265,31 +265,31 @@ export default function Admin() {
 
   const ServicesSection = () => (
     <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex justify-between items-center bg-white p-10 rounded-[32px] border border-black/5 shadow-premium">
-         <h3 className="text-3xl font-serif font-black text-[#0F1113]">Catálogo de <span className="italic-serif text-[#AF944F]">Serviços</span></h3>
-         <Button onClick={() => setModal({ isOpen: true, type: 'service' })} variant="primary" size="md">
+      <div className="flex justify-between items-center bg-noir p-10 rounded-[32px] border border-white/5 shadow-premium">
+         <h3 className="text-3xl font-serif font-black text-white">Catálogo de <span className="italic-serif text-gold">Serviços</span></h3>
+         <Button onClick={() => setModal({ isOpen: true, type: 'service' })} variant="secondary" size="md" className="shadow-lg">
            <Plus size={16} className="mr-2" /> Novo Serviço
          </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
          {services.map(s => (
-           <Card key={s.id} padding={false} className="overflow-hidden border border-black/5 hover:border-[#AF944F]/40 transition-all shadow-premium group rounded-[32px]">
-              <div className="h-48 bg-gray-100 relative">
-                 <img src={s.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt={s.name} />
+           <Card key={s.id} padding={false} className="overflow-hidden border border-white/10 hover:border-gold/40 transition-all shadow-premium group rounded-[32px] bg-noir">
+              <div className="h-48 bg-black relative">
+                 <img src={s.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 brightness-75 group-hover:brightness-100" alt={s.name} />
                  <div className="absolute top-4 right-4 flex gap-2">
-                    <button onClick={() => setModal({ isOpen: true, type: 'service', data: s })} className="p-3 bg-white/20 backdrop-blur-xl text-white rounded-xl hover:bg-white hover:text-black transition-all shadow-lg"><Edit2 size={14} /></button>
-                    <button onClick={() => deleteService(s.id)} className="p-3 bg-white/20 backdrop-blur-xl text-white rounded-xl hover:bg-red-600 transition-all shadow-lg"><Trash2 size={14} /></button>
+                    <button onClick={() => setModal({ isOpen: true, type: 'service', data: s })} className="p-3 bg-black/40 backdrop-blur-xl text-white rounded-xl hover:bg-gold hover:text-black transition-all shadow-lg border border-white/10"><Edit2 size={14} /></button>
+                    <button onClick={() => deleteService(s.id)} className="p-3 bg-black/40 backdrop-blur-xl text-white rounded-xl hover:bg-red-600 transition-all shadow-lg border border-white/10"><Trash2 size={14} /></button>
                  </div>
               </div>
               <div className="p-10 space-y-5">
                  <div className="flex justify-between items-start">
-                    <h4 className="text-xl font-serif font-black text-[#0F1113]">{s.name}</h4>
-                    <span className="text-2xl font-serif font-black text-[#AF944F]">R$ {s.price}</span>
+                    <h4 className="text-xl font-serif font-black text-white">{s.name}</h4>
+                    <span className="text-2xl font-serif font-black text-gold">R$ {s.price}</span>
                  </div>
-                 <p className="text-[11px] text-gray-400 font-light italic-serif leading-relaxed line-clamp-2">{s.description}</p>
-                 <div className="flex items-center gap-2 text-[10px] font-black tracking-widest text-gray-300 font-sans">
-                    <Clock size={12} /> {s.duration} MINUTOS
+                 <p className="text-[11px] text-gray-500 font-light italic-serif leading-relaxed line-clamp-2">{s.description}</p>
+                 <div className="flex items-center gap-2 text-[10px] font-black tracking-widest text-gray-600 font-sans">
+                    <Clock size={12} className="text-gold" /> {s.duration} MINUTOS
                  </div>
               </div>
            </Card>
@@ -337,15 +337,15 @@ export default function Admin() {
         <motion.div 
           initial={{ opacity: 0, scale: 0.9, y: 20 }} 
           animate={{ opacity: 1, scale: 1, y: 0 }} 
-          className="bg-white w-full max-w-2xl rounded-[40px] shadow-2xl relative overflow-hidden z-20 flex flex-col max-h-[90vh]"
+          className="bg-[#1A1A1A] w-full max-w-2xl rounded-[40px] shadow-2xl relative overflow-hidden z-20 flex flex-col max-h-[90vh] border border-white/10"
         >
-          <div className="p-10 border-b border-black/5 flex justify-between items-center bg-[#FCFBFA]">
-            <h4 className="text-2xl font-serif font-black text-[#0F1113] uppercase tracking-tighter">
+          <div className="p-10 border-b border-white/5 flex justify-between items-center bg-noir">
+            <h4 className="text-2xl font-serif font-black text-white uppercase tracking-tighter">
               {modal.type === 'service' ? (modal.data ? 'Editar Serviço' : 'Novo Serviço') : 
                modal.type === 'booking' ? 'Detalhes do Agendamento' : 
                modal.type === 'client' ? 'Perfil do Cliente' : 'Novo Gift Card'}
             </h4>
-            <button onClick={() => setModal({ isOpen: false })} className="p-3 hover:bg-black hover:text-white rounded-xl transition-all shadow-sm group">
+            <button onClick={() => setModal({ isOpen: false })} className="p-3 hover:bg-white/10 text-white rounded-xl transition-all shadow-sm group">
                <X size={20} />
             </button>
           </div>
@@ -354,30 +354,30 @@ export default function Admin() {
             {modal.type === 'service' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Nome do Serviço</label>
-                  <input value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-4 bg-[#F5F5F7] border-none rounded-xl font-sans" />
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Nome do Serviço</label>
+                  <input value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full p-4 bg-black border border-white/5 text-white rounded-xl font-sans" />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Preço (R$)</label>
-                  <input type="number" value={formData.price || ''} onChange={e => setFormData({...formData, price: e.target.value})} className="w-full p-4 bg-[#F5F5F7] border-none rounded-xl font-sans" />
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Preço (R$)</label>
+                  <input type="number" value={formData.price || ''} onChange={e => setFormData({...formData, price: e.target.value})} className="w-full p-4 bg-black border border-white/5 text-white rounded-xl font-sans" />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Duração (minutos)</label>
-                  <input type="number" value={formData.duration || ''} onChange={e => setFormData({...formData, duration: e.target.value})} className="w-full p-4 bg-[#F5F5F7] border-none rounded-xl font-sans" />
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Duração (minutos)</label>
+                  <input type="number" value={formData.duration || ''} onChange={e => setFormData({...formData, duration: e.target.value})} className="w-full p-4 bg-black border border-white/5 text-white rounded-xl font-sans" />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Imagem de Capa</label>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Imagem de Capa</label>
                   <div className="flex gap-4 items-center">
-                    <label className="flex-1 cursor-pointer bg-[#F5F5F7] p-4 rounded-xl text-[10px] font-black uppercase tracking-widest text-center hover:bg-black hover:text-white transition-all">
-                      Escolher Arquivo
+                    <label className="flex-1 cursor-pointer bg-black border border-white/5 p-4 rounded-xl text-[10px] font-black uppercase tracking-widest text-center hover:bg-gold hover:text-black transition-all text-white">
+                       UPLOAD NOIR
                       <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
                     </label>
-                    {formData.image && <div className="w-12 h-12 rounded-lg overflow-hidden border border-black/5"><img src={formData.image} className="w-full h-full object-cover" /></div>}
+                    {formData.image && <div className="w-12 h-12 rounded-lg overflow-hidden border border-white/10"><img src={formData.image} className="w-full h-full object-cover" /></div>}
                   </div>
                 </div>
                 <div className="col-span-full space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Descrição Comercial</label>
-                  <textarea value={formData.description || ''} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full p-4 bg-[#F5F5F7] border-none rounded-xl h-32 font-serif text-sm italic-serif" />
+                  <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">Descrição Comercial</label>
+                  <textarea value={formData.description || ''} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full p-4 bg-black border border-white/5 text-white rounded-xl h-32 font-serif text-sm italic-serif" />
                 </div>
               </div>
             )}
@@ -499,7 +499,7 @@ export default function Admin() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#FDFDFD] font-sans">
+    <div className="flex min-h-screen bg-black font-sans text-white">
       <AnimatePresence>
         {modal.isOpen && <ModernModal />}
       </AnimatePresence>
@@ -508,62 +508,62 @@ export default function Admin() {
       <motion.aside 
         initial={false}
         animate={{ width: sidebarOpen ? 280 : 80 }}
-        className="bg-black text-white flex flex-col z-50 sticky top-0 h-screen"
+        className="bg-noir text-white flex flex-col z-50 sticky top-0 h-screen border-r border-white/5"
       >
         <div className="p-8 mb-12 flex items-center justify-between overflow-hidden">
           <AnimatePresence>
             {sidebarOpen && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col">
-                <span className="text-xl font-serif font-black tracking-tighter leading-none">GS. <span className="text-[#AF944F]">Admin</span></span>
-                <span className="text-[8px] uppercase tracking-[0.5em] text-gray-500 mt-1">Editorial Control</span>
+                <span className="text-xl font-serif font-black tracking-tighter leading-none">GS. <span className="text-gold">Admin</span></span>
+                <span className="text-[8px] uppercase tracking-[0.5em] text-gray-600 mt-1">Noir Luxe Control</span>
               </motion.div>
             )}
           </AnimatePresence>
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-white/10 transition-colors">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-white/5 transition-colors rounded-lg">
             {sidebarOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
 
-        <nav className="flex-1 px-4 space-y-4">
+        <nav className="flex-1 px-4 space-y-2">
           {menuItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center gap-6 p-4 transition-all duration-500 group relative
-                ${activeTab === item.id ? 'text-white' : 'text-gray-500 hover:text-white'}`}
+              className={`w-full flex items-center gap-6 p-5 transition-all duration-500 group relative rounded-2xl
+                ${activeTab === item.id ? 'bg-gold/10 text-gold' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
             >
-              <item.icon size={20} className={activeTab === item.id ? 'text-[#AF944F]' : ''} />
-              {sidebarOpen && <span className="text-[10px] font-black uppercase tracking-[0.3em] font-sans">{item.label}</span>}
+              <item.icon size={20} className={activeTab === item.id ? 'text-gold' : 'group-hover:text-gold transition-colors'} />
+              {sidebarOpen && <span className="text-[10px] font-black uppercase tracking-[0.4em] font-sans">{item.label}</span>}
               {activeTab === item.id && (
-                <motion.div layoutId="active-pill" className="absolute left-0 w-1 h-8 bg-[#AF944F]" />
+                <motion.div layoutId="active-pill" className="absolute left-0 w-1 h-6 bg-gold rounded-full" />
               )}
             </button>
           ))}
         </nav>
 
         <div className="p-8 border-t border-white/5">
-           <button onClick={logout} className="flex items-center gap-6 text-gray-500 hover:text-red-400 transition-colors">
+           <button onClick={logout} className="flex items-center gap-6 text-gray-500 hover:text-red-400 transition-colors w-full p-4 hover:bg-red-500/5 rounded-2xl">
               <LogOut size={20} />
-              {sidebarOpen && <span className="text-[10px] font-black uppercase tracking-[0.3em]">Sair</span>}
+              {sidebarOpen && <span className="text-[10px] font-black uppercase tracking-[0.4em]">Sair</span>}
            </button>
         </div>
       </motion.aside>
 
       {/* MAIN CONTENT */}
       <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-24 border-b border-black/5 flex items-center justify-between px-6 sm:px-12 bg-white sticky top-0 z-40 shadow-sm">
+        <header className="h-24 border-b border-white/5 flex items-center justify-between px-6 sm:px-12 bg-noir sticky top-0 z-40 shadow-2xl">
            <div className="flex items-center gap-4 sm:gap-8 overflow-hidden">
-              <h2 className="text-lg sm:text-xl font-serif font-black uppercase tracking-tighter whitespace-nowrap">Dashboard <span className="italic-serif text-[#AF944F] hidden sm:inline">Noir</span></h2>
-              <div className="h-6 w-[1px] bg-black/5 hidden sm:block" />
-              <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-gray-400 truncate">{menuItems.find(m => m.id === activeTab)?.label}</p>
+              <h2 className="text-lg sm:text-xl font-serif font-black uppercase tracking-tighter whitespace-nowrap">Dashboard <span className="italic-serif text-gold hidden sm:inline">Noir</span></h2>
+              <div className="h-6 w-[1px] bg-white/10 hidden sm:block" />
+              <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-gray-500 truncate">{menuItems.find(m => m.id === activeTab)?.label}</p>
            </div>
            <div className="flex items-center gap-4 sm:gap-8">
               <div className="flex items-center gap-4">
                  <div className="text-right hidden sm:block">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-[#0F1113]">{user.name}</p>
-                    <p className="text-[8px] uppercase tracking-widest text-[#AF944F]">Gerenciador Geral</p>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white">{user.name}</p>
+                    <p className="text-[8px] uppercase tracking-widest text-gold opacity-60">Curador Geral</p>
                  </div>
-                 <div className="w-10 h-10 bg-[#0F1113] text-white flex items-center justify-center font-serif font-black rounded-xl">
+                 <div className="w-10 h-10 bg-gold text-black flex items-center justify-center font-serif font-black rounded-xl">
                     {user.name[0]}
                  </div>
               </div>

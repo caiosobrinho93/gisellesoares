@@ -58,7 +58,7 @@ export function AppProvider({ children }) {
     const newBooking = {
       ...booking,
       id: Date.now().toString(),
-      status: 'confirmed',
+      status: 'Confirmado',
       createdAt: new Date().toISOString(),
     };
     const newList = [...bookings, newBooking];
@@ -72,7 +72,7 @@ export function AppProvider({ children }) {
   };
 
   const cancelBooking = (id) => {
-    updateBooking(id, { status: 'cancelled' });
+    updateBooking(id, { status: 'Cancelado' });
   };
 
   const deleteBooking = (id) => {
@@ -81,7 +81,7 @@ export function AppProvider({ children }) {
   };
 
   const completeBooking = (id) => {
-    updateBooking(id, { status: 'completed' });
+    updateBooking(id, { status: 'Concluído' });
   };
 
   const getUserBookings = useCallback((userId) => {

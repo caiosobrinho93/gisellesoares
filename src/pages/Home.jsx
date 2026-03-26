@@ -14,169 +14,171 @@ export default function Home() {
   const featured = services.slice(0, 3);
 
   return (
-    <div className="bg-[#F5F5F7]">
-      {/* HERO: LUXE CLINIC / PROFESSIONAL */}
-      <section className="relative min-h-[90vh] flex items-center bg-[#0F1113] overflow-hidden">
+    <div className="bg-black">
+      {/* HERO: NOIR LUXE */}
+      <section className="relative min-h-[95vh] flex items-center bg-black overflow-hidden selection:bg-gold/30">
         <div className="container-luxe relative z-10 py-16 md:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
              <motion.div 
-               initial={{ opacity: 0, y: 30 }} 
-               animate={{ opacity: 1, y: 0 }} 
-               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+               initial={{ opacity: 0, x: -50 }} 
+               animate={{ opacity: 1, x: 0 }} 
+               transition={{ duration: 1, ease: [0.2, 1, 0.2, 1] }}
              >
-                <div className="flex items-center gap-4 mb-8">
-                   <div className="w-10 h-[1.5px] bg-[#AF944F] rounded-full" />
-                   <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#AF944F]">Atendimento Exclusivo</span>
+                <div className="flex items-center gap-5 mb-10">
+                   <div className="w-12 h-[1px] bg-gold/50" />
+                   <span className="text-[12px] font-black uppercase tracking-[0.6em] text-gold/80">Noir Edition</span>
                 </div>
-                <h1 className="text-4xl md:text-7xl font-serif font-black text-white leading-[1.1] mb-10 tracking-tight">
-                   Onde a Excelência <br />
-                   Encontra o <span className="italic-serif text-[#AF944F]">Sofisticado</span>.
+                <h1 className="text-5xl md:text-9xl font-serif font-black text-white leading-[0.85] mb-12 tracking-tighter">
+                   Curadoria <br />
+                   de <span className="italic-serif">Beleza</span>.
                 </h1>
-                <p className="text-lg md:text-xl font-light text-gray-400 max-w-xl leading-relaxed mb-12">
-                   Especialistas em biossegurança e estética de alto padrão. Redefinimos o conceito de manicure com precisão milimétrica e curadoria exclusiva.
+                <p className="text-xl md:text-2xl font-light text-gray-400 max-w-xl leading-relaxed mb-16 italic-serif">
+                   Onde a precisão técnica encontra o luxo absoluto. Redefinimos o cuidado com um olhar Noir e curadoria milimétrica.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-6">
-                   <Button as={Link} to="/agendar" variant="secondary" size="xl" className="shadow-2xl">Agendar Consulta</Button>
-                   <Button as={Link} to="/galeria" variant="outline" size="xl" className="border-white/20 text-white hover:bg-white hover:text-[#0F1113]">Ver Galeria</Button>
+                <div className="flex flex-col sm:flex-row gap-8">
+                   <Button as={Link} to="/agendar" variant="secondary" size="xl" className="shadow-luxe h-20 px-12 text-[10px] tracking-[0.5em]">RESERVAR EXPERIÊNCIA</Button>
+                   <Button as={Link} to="/galeria" variant="outline" size="xl" className="border-white/10 text-white hover:bg-white hover:text-black h-20 px-12 text-[10px] tracking-[0.5em]">GALERIA NOIR</Button>
                 </div>
              </motion.div>
-             <div className="hidden lg:block">
+             <div className="hidden lg:block relative">
                 <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }} 
-                  animate={{ opacity: 1, scale: 1 }} 
-                  transition={{ duration: 1.2 }}
-                  className="relative p-8"
+                   initial={{ opacity: 0, scale: 1.1 }} 
+                   animate={{ opacity: 1, scale: 1 }} 
+                   transition={{ duration: 1.5, ease: "easeOut" }}
+                   className="relative"
                 >
-                   <div className="absolute inset-0 border-[2px] border-[#AF944F]/20 rounded-[40px] translate-x-8 translate-y-8" />
+                   <div className="absolute -inset-4 border border-gold/20 rounded-[40px] translate-x-6 translate-y-6 -z-10" />
                    <img 
                      src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1000&auto=format&fit=crop" 
-                     className="w-full aspect-[4/5] object-cover rounded-[32px] shadow-premium brightness-90 saturate-[0.8]" 
+                     className="w-full aspect-[4/5] object-cover rounded-[32px] shadow-luxe grayscale-[0.3] brightness-75 hover:grayscale-0 transition-all duration-1000" 
                      alt="Estética" 
                    />
                 </motion.div>
+                <div className="absolute -bottom-10 -left-10 bg-noir border border-white/5 p-10 rounded-3xl shadow-2xl backdrop-blur-xl editorial-reveal visible delay-500">
+                   <p className="text-4xl font-serif font-black text-gold mb-1">0%</p>
+                   <p className="text-[9px] font-bold uppercase tracking-widest text-gray-500">Erros Técnicos</p>
+                </div>
              </div>
           </div>
         </div>
-        {/* Abstract Background Layer */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#AF944F]/5 blur-[120px] rounded-full translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gold/[0.03] blur-[150px] rounded-full translate-x-1/2 -z-0" />
       </section>
 
-      {/* PHILOSOPHY: HIGH CONTRAST - LUXURY GRAY */}
-      <Section background="bg-[#F5F5F7]">
-         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-            <div className="editorial-reveal">
+      {/* PHILOSOPHY: DARK NOIR */}
+      <Section background="bg-black">
+         <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
+            <div className="editorial-reveal relative group">
                <img 
                  src="https://images.unsplash.com/photo-1632345031435-07ca681582d1?q=80&w=1000&auto=format&fit=crop" 
-                 className="w-full aspect-[16/10] object-cover rounded-[20px] shadow-premium" 
+                 className="w-full aspect-[16/10] object-cover rounded-[32px] shadow-luxe grayscale-[0.5] group-hover:grayscale-0 transition-all duration-1000" 
                  alt="Biossegurança" 
                />
-               <div className="mt-8 flex gap-8">
-                  <div className="bg-white p-8 rounded-[20px] flex-1 shadow-premium border border-black/5">
-                     <p className="text-3xl font-serif font-black text-[#AF944F]">100%</p>
-                     <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Seguro</p>
-                  </div>
-                  <div className="bg-white p-8 rounded-[20px] flex-1 shadow-premium border border-black/5">
-                     <p className="text-3xl font-serif font-black text-[#AF944F]">Premium</p>
-                     <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Material Elite</p>
-                  </div>
-               </div>
+               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition-colors duration-1000 rounded-[32px]" />
             </div>
             <div className="editorial-reveal">
                <div className="p-2 md:p-8">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#AF944F] mb-6 block">01 / Compromisso</span>
-                  <h2 className="text-5xl md:text-7xl mb-10 leading-tight">Cuidado e Estética em <span className="italic-serif">Perfeita</span> Harmonia.</h2>
-                  <p className="text-xl text-gray-500 font-light leading-relaxed mb-12">
-                    Utilizamos os mais rigorosos protocolos de biossegurança combinados com a sofisticação da técnica de cuticulagem a seco.
+                  <span className="text-[12px] font-black uppercase tracking-[0.5em] text-gold mb-8 block">CURADORIA NOIR</span>
+                  <h2 className="text-6xl md:text-8xl mb-12 leading-[0.9] text-white">O Rigor da <br /><span className="italic-serif">Perfeição</span>.</h2>
+                  <p className="text-2xl text-gray-400 font-light leading-relaxed mb-16 italic-serif">
+                    Protocolos hospitalares de esterilização fundidos com a sofisticação da cuticulagem a seco. O luxo que respeita sua saúde.
                   </p>
-                  <ul className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     {[
-                      { icon: ShieldCheck, text: "Protocolo de Biossegurança" },
-                      { icon: Award, text: "Técnicas Certificadas" },
-                      { icon: Fingerprint, text: "Seleção de Cores Exclusiva" }
+                      { icon: ShieldCheck, text: "Biossegurança Total" },
+                      { icon: Award, text: "Técnica Russa" },
                     ].map((item, i) => (
-                      <li key={i} className="flex items-center gap-6 group">
-                         <div className="w-14 h-14 bg-white rounded-[20px] flex items-center justify-center text-[#AF944F] group-hover:bg-[#AF944F] group-hover:text-white transition-all shadow-premium border border-black/5">
+                      <div key={i} className="flex items-center gap-6 p-6 rounded-2xl bg-noir border border-white/5 shadow-premium group hover:border-gold/30 transition-all">
+                         <div className="w-12 h-12 flex items-center justify-center text-gold bg-gold/5 rounded-xl">
                             <item.icon size={24} />
                          </div>
-                         <span className="text-[11px] font-bold uppercase tracking-[0.3em]">{item.text}</span>
-                      </li>
+                         <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-300">{item.text}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                </div>
             </div>
          </div>
       </Section>
 
-      {/* HIGHLIGHTS: HIGH CONTRAST - LUXURY GRAY */}
-      <Section background="bg-[#F5F5F7]">
-         <div className="text-center mb-24 editorial-reveal">
-            <h2 className="text-5xl md:text-8xl font-serif font-black mb-6 tracking-tighter">Nossos Serviços.</h2>
-            <p className="text-gray-400 font-light italic-serif text-xl">Uma curadoria pensada para elevar sua experiência de cuidado.</p>
+      {/* DYNAMIC SERVICES: NOIR CATALOG */}
+      <Section background="bg-black">
+         <div className="flex flex-col md:flex-row justify-between items-end mb-32 editorial-reveal gap-12">
+            <div className="max-w-2xl text-left">
+               <span className="text-[12px] font-black uppercase tracking-[0.5em] text-gold mb-6 block">CATÁLOGO EXCLUSIVO</span>
+               <h2 className="text-6xl md:text-9xl font-serif font-black tracking-tighter text-white">Nossas <span className="italic-serif">Artes</span>.</h2>
+            </div>
+            <div className="pb-4">
+               <p className="text-xl text-gray-500 font-light italic-serif">Experiências curadas para elevar seu padrão.</p>
+            </div>
          </div>
-         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16">
-            {featured.length > 0 ? featured.map((s, i) => (
+         
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+            {services.length > 0 ? services.map((s, i) => (
                <motion.div 
                  key={s.id}
-                 initial={{ opacity: 0, y: 30 }}
+                 initial={{ opacity: 0, y: 40 }}
                  whileInView={{ opacity: 1, y: 0 }}
                  viewport={{ once: true }}
-                 transition={{ delay: i * 0.2, duration: 0.8 }}
-                 whileHover={{ y: -12 }}
-                 className="group relative overflow-hidden rounded-[20px] bg-white shadow-premium hover:shadow-luxe-hover transition-all duration-700 h-full flex flex-col border border-black/5"
+                 transition={{ delay: i * 0.1, duration: 1, ease: [0.2, 1, 0.2, 1] }}
+                 className="group relative flex flex-col h-full"
                >
-                 {/* Image Container with Price Label */}
-                 <div className="relative h-64 md:h-80 overflow-hidden shrink-0">
+                 <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] mb-10 shadow-luxe bg-noir">
                     <img 
                       src={s.image} 
                       alt={s.name} 
-                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                      className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 brightness-75 group-hover:brightness-100"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40" />
-                    <div className="absolute top-6 right-6">
-                       <div className="bg-white/10 backdrop-blur-xl px-6 py-2 rounded-full border border-white/20 shadow-2xl">
-                          <span className="text-white text-[11px] font-bold tracking-[0.2em] uppercase text-nowrap">R$ {s.price}</span>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80" />
+                    <div className="absolute inset-0 border border-white/5 rounded-[32px] transition-all group-hover:border-gold/30" />
+                    
+                    <div className="absolute bottom-10 left-10 right-10 flex justify-between items-end">
+                       <div className="translate-y-4 group-hover:translate-y-0 transition-all duration-700 opacity-0 group-hover:opacity-100">
+                          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-gold mb-2">Procedimento Noir</p>
+                          <h3 className="text-3xl font-serif font-black text-white leading-tight">{s.name}</h3>
+                       </div>
+                       <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl shadow-2xl">
+                          <p className="text-gold text-[12px] font-black tracking-widest whitespace-nowrap">R$ {s.price}</p>
                        </div>
                     </div>
                  </div>
 
-                 {/* Content Area */}
-                 <div className="p-12 flex flex-col flex-1">
-                    <div className="mb-6">
-                       <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#AF944F] mb-4 block opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0 text-center">Procedimento de Elite</span>
-                       <h3 className="text-3xl font-serif font-black mb-4 group-hover:text-[#AF944F] transition-colors leading-tight text-center">{s.name}</h3>
-                    </div>
-                    <p className="text-gray-500 text-base font-light leading-relaxed mb-auto italic-serif text-center">
+                 <div className="px-4 flex flex-col flex-1">
+                    <p className="text-gray-500 text-lg font-light leading-relaxed mb-10 italic-serif line-clamp-2">
                        {s.description}
                     </p>
-                    <div className="flex justify-between items-center pt-10 mt-10 border-t border-black/5">
-                       <div className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-widest text-gray-400">
-                          <Clock size={16} className="text-[#AF944F]" /> {formatDuration(s.duration)}
+                    <div className="flex justify-between items-center mt-auto pb-4">
+                       <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-[#AF944F]/60">
+                          <Clock size={14} className="text-gold" /> {formatDuration(s.duration)}
                        </div>
-                       <Link to="/agendar" className="bg-[#0F1113] text-white p-4 rounded-[16px] hover:bg-[#AF944F] transition-all shadow-premium">
-                          <ChevronRight size={20} />
+                       <Link to="/agendar" className="text-white hover:text-gold transition-colors flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] group/link">
+                          Reservar <ChevronRight size={16} className="group-hover/link:translate-x-2 transition-transform" />
                        </Link>
                     </div>
                  </div>
                </motion.div>
             )) : (
-              <div className="col-span-3 text-center py-20 text-gray-300 italic-serif">Carregando serviços exclusivos...</div>
+               <div className="col-span-full text-center py-32 border border-dashed border-white/10 rounded-[32px] text-gray-500 italic-serif">
+                  Aguardando curadoria de serviços...
+               </div>
             )}
          </div>
       </Section>
 
-      {/* CTA: PROFESSIONAL LUXE - DEEP DARK */}
-      <Section background="bg-[#0F1113]">
-         <div className="bg-[#AF944F]/5 p-20 md:p-32 rounded-[20px] text-center editorial-reveal border border-white/5 shadow-premium overflow-hidden relative group">
-            <Star className="mx-auto mb-12 text-[#AF944F] group-hover:scale-110 transition-transform duration-700" size={48} strokeWidth={1} />
-            <h2 className="text-6xl md:text-8xl font-serif font-black text-white mb-10 tracking-tighter">Vivencie a Exclusividade.</h2>
-            <p className="text-2xl font-light text-gray-400 mb-20 max-w-3xl mx-auto italic-serif leading-relaxed">
-               Nossa agenda é limitada para garantir a atenção absoluta que cada detalhe merece. Sua reserva é o início de um atendimento.
-            </p>
-            <Button as={Link} to="/agendar" variant="secondary" size="xl" className="shadow-premium px-20">Solicitar Horário</Button>
+      {/* CTA: TOTAL NOIR */}
+      <Section background="bg-black">
+         <div className="bg-noir p-16 md:p-40 rounded-[48px] text-center editorial-reveal border border-white/5 relative overflow-hidden group shadow-luxe">
+            <div className="relative z-10 flex flex-col items-center">
+               <Fingerprint className="mb-12 text-gold opacity-50 transition-opacity group-hover:opacity-100 duration-1000" size={64} strokeWidth={0.5} />
+               <h2 className="text-6xl md:text-[10rem] font-serif font-black text-white mb-12 tracking-tighter leading-[0.8]">Noir.<span className="italic-serif text-gold"> Luxe.</span></h2>
+               <p className="text-2xl md:text-3xl font-light text-gray-400 mb-20 max-w-3xl mx-auto italic-serif leading-relaxed px-4">
+                  Sinta a curadoria exclusiva onde cada movimento é planejado para sua satisfação absoluta.
+               </p>
+               <Button as={Link} to="/agendar" variant="secondary" size="xl" className="shadow-2xl h-24 px-20 text-[12px] tracking-[0.6em] hover:scale-105 transition-transform">SOLICITAR CONVITE</Button>
+            </div>
             
-            {/* Background elements for depth */}
-            <div className="absolute top-0 left-0 w-64 h-64 bg-[#AF944F]/10 blur-[100px] rounded-full -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#AF944F]/10 blur-[100px] rounded-full translate-x-1/2 translate-y-1/2" />
+            {/* Visual Depth */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gold/[0.02] blur-[150px] rounded-full" />
+            <div className="absolute top-0 right-0 p-12 text-[150px] font-serif font-black text-white/[0.02] select-none translate-x-1/3 -translate-y-1/3 italic pointer-events-none">G.S</div>
          </div>
       </Section>
     </div>
