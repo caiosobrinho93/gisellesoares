@@ -68,6 +68,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     storage.remove('session');
     setUser(null);
+    window.location.href = '/gisellesoares/';
   };
 
   const updateUser = (updates) => {

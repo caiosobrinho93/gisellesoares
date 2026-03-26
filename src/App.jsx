@@ -25,22 +25,34 @@ function Layout({ children }) {
   );
 }
 
+function LoadingGuard({ children }) {
+  const { loading } = useAuth();
+  if (loading) return (
+    <div className="fixed inset-0 bg-black flex items-center justify-center">
+      <div className="w-12 h-12 border-4 border-gold border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+  return children;
+}
+
 export default function App() {
   return (
     <BrowserRouter basename="/gisellesoares/">
       <AuthProvider>
-        <AppProvider>
-          <Routes>
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/" element={<Layout><Home /></Layout>} />
-            <Route path="/galeria" element={<Layout><Galeria /></Layout>} />
-            <Route path="/esmaltes" element={<Layout><Esmaltes /></Layout>} />
-            <Route path="/agendar" element={<Layout><Agendamento /></Layout>} />
-            <Route path="/login" element={<Layout><Login /></Layout>} />
-            <Route path="/cadastro" element={<Layout><Cadastro /></Layout>} />
-            <Route path="/usuario" element={<Layout><Usuario /></Layout>} />
-          </Routes>
-        </AppProvider>
+        <LoadingGuard>
+          <AppProvider>
+            <Routes>
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/" element={<Layout><Home /></Layout>} />
+              <Route path="/galeria" element={<Layout><Galeria /></Layout>} />
+              <Route path="/esmaltes" element={<Layout><Esmaltes /></Layout>} />
+              <Route path="/agendar" element={<Layout><Agendamento /></Layout>} />
+              <Route path="/login" element={<Layout><Login /></Layout>} />
+              <Route path="/cadastro" element={<Layout><Cadastro /></Layout>} />
+              <Route path="/usuario" element={<Layout><Usuario /></Layout>} />
+            </Routes>
+          </AppProvider>
+        </LoadingGuard>
       </AuthProvider>
     </BrowserRouter>
   );

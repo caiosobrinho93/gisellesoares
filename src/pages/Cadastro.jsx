@@ -43,8 +43,8 @@ export default function Cadastro() {
         <div className="p-12 md:p-20 bg-white border border-black/5 rounded-[40px] shadow-2xl relative overflow-hidden editorial-reveal">
           <div className="text-center mb-16">
             <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#AF944F] mb-6 block">Novo Cadastro</span>
-            <h1 className="text-5xl md:text-6xl font-serif font-black mb-4 tracking-tighter text-[#0F1113]">Criar <span className="italic-serif text-[#AF944F]">Perfil</span>.</h1>
-            <p className="text-gray-400 text-sm font-light italic-serif">Inicie sua jornada em direção ao cuidado absoluto.</p>
+            <h1 className="text-5xl md:text-6xl font-black mb-4 tracking-tighter text-[#0F1113] uppercase">Criar <span className="text-[#AF944F]">Perfil</span>.</h1>
+            <p className="text-gray-400 text-sm font-normal">Inicie sua jornada em direção ao cuidado absoluto.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-10">
@@ -89,8 +89,8 @@ export default function Cadastro() {
           </form>
 
           <div className="mt-16 text-center pt-10 border-t border-black/5">
-            <p className="text-gray-400 text-xs font-light mb-8 italic-serif uppercase tracking-widest">Já possui cadastro?</p>
-            <Button as={Link} to="/login" variant="gold" size="lg" className="w-full">Acessar</Button>
+            <p className="text-gray-400 text-[10px] font-black mb-8 uppercase tracking-widest">Já possui cadastro?</p>
+            <Button as={Link} to="/login" variant="gold" size="lg" className="w-full uppercase tracking-widest text-[10px] font-black">Acessar</Button>
           </div>
 
           {/* Abstract Design Element */}

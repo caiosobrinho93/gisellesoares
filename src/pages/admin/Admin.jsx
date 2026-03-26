@@ -24,7 +24,7 @@ export default function Admin() {
   } = useApp();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(true); // true means CLOSED/COLLAPSED on mobile by default logic below
   const [modal, setModal] = useState({ isOpen: false, type: null, data: null });
 
   const users = getAllUsers();
@@ -56,11 +56,26 @@ export default function Admin() {
   const sortedBookings = useMemo(() => {
     const now = new Date();
     return [...bookings].sort((a, b) => {
-      const diffA = Math.abs(differenceInMinutes(new Date(a.datetime), now));
-      const diffB = Math.abs(differenceInMinutes(new Date(b.datetime), now));
-      return diffA - diffB;
+      const dateA = new Date(a.datetime);
+      const dateB = new Date(b.datetime);
+      
+      // If both are in the future, sort by closest
+      if (dateA > now && dateB > now) return dateA - dateB;
+      // If one is future and one is past, future comes first
+      if (dateA > now && dateB <= now) return -1;
+      if (dateA <= now && dateB > now) return 1;
+      // If both are in the past, most recent first
+      return dateB - dateA;
     });
   }, [bookings]);
+
+  const activeBookings = useMemo(() => 
+    sortedBookings.filter(b => b.status !== 'Concluído' && b.status !== 'Cancelado'),
+  [sortedBookings]);
+
+  const historyBookings = useMemo(() => 
+    sortedBookings.filter(b => b.status === 'Concluído' || b.status === 'Cancelado'),
+  [sortedBookings]);
 
   // DashboardSection
   const DashboardSection = () => (
@@ -78,37 +93,44 @@ export default function Admin() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <div className="bg-noir p-8 md:p-10 rounded-[28px] md:rounded-[32px] border border-white/5 shadow-premium">
-          <h3 className="text-2xl md:text-3xl font-serif font-black mb-8 text-white">
-            Agendamentos <span className="italic-serif text-gold">Próximos</span>
+        <div className="bg-noir p-6 md:p-10 rounded-[32px] border border-white/5 shadow-premium flex flex-col">
+          <h3 className="text-xl md:text-2xl font-black mb-8 text-white uppercase tracking-tighter">
+            Próximos <span className="text-gold italic">Horários</span>
           </h3>
-          <div className="space-y-4">
-            {sortedBookings.slice(0, 6).map(b => (
+          <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+            {activeBookings.map(b => (
               <button
                 key={b.id}
                 onClick={() => setModal({ isOpen: true, type: 'booking', data: b })}
-                className="w-full flex items-center justify-between p-5 hover:bg-white/5 rounded-2xl transition-all border border-transparent hover:border-gold/20 text-left"
+                className="w-full flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl transition-all border border-white/5 hover:border-gold/20 text-left bg-black/20"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-black text-white flex items-center justify-center font-black rounded-xl text-sm shrink-0 border border-white/5">
+                  <div className="w-10 h-10 bg-gold/10 text-gold flex items-center justify-center font-black rounded-xl text-sm shrink-0 border border-gold/20 uppercase">
                     {b.userName?.[0]}
                   </div>
-                  <div>
-                    <p className="text-xs font-black font-sans uppercase tracking-widest text-white">{b.userName}</p>
-                    <p className="text-[11px] text-gray-500 font-light italic-serif">{b.serviceName}</p>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white truncate">{b.userName}</p>
+                    <p className="text-[11px] text-gray-500 font-medium truncate">{b.serviceName}</p>
                   </div>
                 </div>
                 <div className="text-right ml-4 shrink-0">
-                  <p className="text-[10px] font-black font-sans text-white">{format(new Date(b.datetime), "dd MMM, HH:mm", { locale: ptBR })}</p>
+                  <p className="text-[10px] font-black text-white">{format(new Date(b.datetime), "dd MMM, HH:mm", { locale: ptBR })}</p>
                   <div className="flex items-center gap-2 justify-end mt-1">
-                    <span className={`text-[10px] font-black uppercase tracking-widest ${b.status === 'Cancelado' ? 'text-red-400' : b.status === 'Concluído' ? 'text-green-400' : 'text-gold'}`}>{b.status}</span>
-                    {b.paid && <span className="text-[8px] font-black uppercase tracking-widest text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full">Pago</span>}
+                    <span className="text-[8px] font-black uppercase tracking-widest text-gold bg-gold/10 px-2 py-0.5 rounded-full">{b.status}</span>
                   </div>
                 </div>
               </button>
             ))}
-            {bookings.length === 0 && <p className="text-center text-gray-500 italic-serif py-12">Nenhum agendamento ainda.</p>}
+            {activeBookings.length === 0 && <p className="text-center text-gray-500 py-12 text-sm italic">Nenhum agendamento pendente.</p>}
           </div>
+          {historyBookings.length > 0 && (
+            <button 
+              onClick={() => setActiveTab('agendamentos')}
+              className="mt-6 text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 hover:text-gold transition-colors block text-center border-t border-white/5 pt-6"
+            >
+              Ver Histórico Completo
+            </button>
+          )}
         </div>
         <div className="bg-noir p-8 md:p-10 rounded-[28px] md:rounded-[32px] border border-white/5 shadow-premium">
           <h3 className="text-2xl md:text-3xl font-serif font-black mb-8 text-white">Gift Cards <span className="italic-serif text-gold">Ativos</span></h3>
@@ -132,62 +154,82 @@ export default function Admin() {
     </div>
   );
 
-  const BookingsSection = () => (
-    <div className="bg-noir rounded-[32px] border border-white/5 shadow-premium overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="p-8 md:p-10 border-b border-white/5 flex justify-between items-center">
-        <h3 className="text-2xl md:text-3xl font-serif font-black text-white">Gestão de <span className="italic-serif text-gold">Agendamentos</span></h3>
-        <Button variant="outline" size="sm" className="hidden sm:flex border-white/10 text-white hover:bg-gold hover:text-black text-xs">
-          <Download size={14} className="mr-2" /> Exportar
-        </Button>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left">
-          <thead className="bg-black/40">
-            <tr>
-              <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Cliente</th>
-              <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden md:table-cell">Serviço</th>
-              <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500">Data & Hora</th>
-              <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden sm:table-cell">Status</th>
-              <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 text-right">Ações</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-white/5">
-            {sortedBookings.map(b => (
-              <tr key={b.id} className="hover:bg-white/5 transition-colors cursor-pointer" onClick={() => setModal({ isOpen: true, type: 'booking', data: b })}>
-                <td className="px-6 md:px-10 py-6">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-black text-white rounded-xl flex items-center justify-center font-black text-xs border border-white/5 shrink-0">{b.userName?.[0]}</div>
-                    <span className="text-xs font-black font-sans uppercase tracking-[0.1em] text-white">{b.userName}</span>
-                  </div>
-                </td>
-                <td className="px-6 md:px-10 py-6 text-xs text-gray-500 font-light italic-serif hidden md:table-cell">{b.serviceName}</td>
-                <td className="px-6 md:px-10 py-6">
-                  <p className="text-[11px] font-black font-sans text-white">{format(new Date(b.datetime), "dd/MM/yyyy")}</p>
-                  <p className="text-[11px] text-gold font-bold font-sans">{format(new Date(b.datetime), "HH:mm")}</p>
-                </td>
-                <td className="px-6 md:px-10 py-6 hidden sm:table-cell">
-                  <span className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full ${b.status === 'Cancelado' ? 'bg-red-500/10 text-red-400' : b.status === 'Concluído' ? 'bg-green-500/10 text-green-400' : 'bg-gold/10 text-gold'}`}>
-                    {b.status}
-                  </span>
-                </td>
-                <td className="px-6 md:px-10 py-6 text-right" onClick={e => e.stopPropagation()}>
-                  <div className="flex justify-end gap-2">
-                    <button onClick={() => setModal({ isOpen: true, type: 'booking', data: b })} className="p-2 text-gray-500 hover:text-white transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center">
-                      <Edit2 size={16} />
-                    </button>
-                    <button onClick={() => { if (window.confirm('Excluir agendamento?')) deleteBooking(b.id); }} className="p-2 text-gray-500 hover:text-red-500 transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center">
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
+  const BookingsSection = () => {
+    const [subTab, setSubTab] = useState('ativos');
+    const displayBookings = subTab === 'ativos' ? activeBookings : historyBookings;
+
+    return (
+      <div className="bg-noir rounded-[32px] border border-white/5 shadow-premium overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="p-6 md:p-10 border-b border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+          <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Gestão de <span className="text-gold italic">Agendamentos</span></h3>
+          <div className="flex bg-black/40 p-1 rounded-xl border border-white/10 w-full sm:w-auto">
+            <button 
+              onClick={() => setSubTab('ativos')}
+              className={`flex-1 sm:flex-none px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${subTab === 'ativos' ? 'bg-gold text-black' : 'text-gray-500 hover:text-white'}`}
+            >
+              Ativos ({activeBookings.length})
+            </button>
+            <button 
+              onClick={() => setSubTab('historico')}
+              className={`flex-1 sm:flex-none px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${subTab === 'historico' ? 'bg-gold text-black' : 'text-gray-500 hover:text-white'}`}
+            >
+              Histórico ({historyBookings.length})
+            </button>
+          </div>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead className="bg-black/40">
+              <tr>
+                <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 whitespace-nowrap">Cliente</th>
+                <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden md:table-cell whitespace-nowrap">Serviço</th>
+                <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 whitespace-nowrap">Data & Hora</th>
+                <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 hidden sm:table-cell whitespace-nowrap">Status</th>
+                <th className="px-6 md:px-10 py-6 text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 text-right whitespace-nowrap">Ações</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        {bookings.length === 0 && <p className="text-center text-gray-500 italic-serif py-16">Nenhum agendamento.</p>}
+            </thead>
+            <tbody className="divide-y divide-white/5">
+              {displayBookings.map(b => (
+                <tr 
+                  key={b.id} 
+                  className={`hover:bg-white/5 transition-colors cursor-pointer ${b.status === 'Concluído' ? 'opacity-60' : ''}`} 
+                  onClick={() => setModal({ isOpen: true, type: 'booking', data: b })}
+                >
+                  <td className="px-6 md:px-10 py-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 bg-black text-white rounded-xl flex items-center justify-center font-black text-xs border border-white/5 shrink-0 uppercase">{b.userName?.[0]}</div>
+                      <span className="text-[11px] font-black uppercase tracking-[0.1em] text-white truncate max-w-[120px]">{b.userName}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 md:px-10 py-6 text-xs text-gray-400 font-medium hidden md:table-cell truncate max-w-[150px]">{b.serviceName}</td>
+                  <td className="px-6 md:px-10 py-6">
+                    <p className="text-[11px] font-black text-white">{format(new Date(b.datetime), "dd/MM/yyyy")}</p>
+                    <p className="text-[11px] text-gold font-bold">{format(new Date(b.datetime), "HH:mm")}</p>
+                  </td>
+                  <td className="px-6 md:px-10 py-6 hidden sm:table-cell">
+                    <span className={`text-[8px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full ${b.status === 'Cancelado' ? 'bg-red-500/10 text-red-400' : b.status === 'Concluído' ? 'bg-white/10 text-gray-400' : 'bg-gold/10 text-gold'}`}>
+                      {b.status}
+                    </span>
+                  </td>
+                  <td className="px-6 md:px-10 py-6 text-right" onClick={e => e.stopPropagation()}>
+                    <div className="flex justify-end gap-2">
+                      <button onClick={() => setModal({ isOpen: true, type: 'booking', data: b })} className="p-2 text-gray-500 hover:text-white transition-colors">
+                        <Edit2 size={16} />
+                      </button>
+                      <button onClick={() => { if (window.confirm('Excluir agendamento?')) deleteBooking(b.id); }} className="p-2 text-gray-500 hover:text-red-500 transition-colors">
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {displayBookings.length === 0 && <p className="text-center text-gray-500 py-16 text-sm italic">Nenhum agendamento encontrado.</p>}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const ClientsSection = () => (
     <div className="bg-noir rounded-[32px] border border-white/5 shadow-premium overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -280,8 +322,8 @@ export default function Admin() {
 
   const ServicesSection = () => (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex justify-between items-center bg-noir p-8 md:p-10 rounded-[32px] border border-white/5 shadow-premium">
-        <h3 className="text-2xl md:text-3xl font-serif font-black text-white">Catálogo de <span className="italic-serif text-gold">Serviços</span></h3>
+      <div className="flex justify-between items-center bg-noir p-6 md:p-10 rounded-[32px] border border-white/5 shadow-premium">
+        <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Catálogo de <span className="text-gold italic">Serviços</span></h3>
         <Button onClick={() => setModal({ isOpen: true, type: 'service' })} variant="secondary" size="md">
           <Plus size={16} className="mr-2" /> Novo
         </Button>
@@ -298,11 +340,11 @@ export default function Admin() {
             </div>
             <div className="p-8 space-y-4">
               <div className="flex justify-between items-start">
-                <h4 className="text-xl font-serif font-black text-white">{s.name}</h4>
-                <span className="text-2xl font-serif font-black text-gold">R$ {s.price}</span>
+                <h4 className="text-lg font-black text-white uppercase tracking-tighter">{s.name}</h4>
+                <span className="text-xl font-black text-gold">R$ {s.price}</span>
               </div>
-              <p className="text-[11px] text-gray-500 font-light italic-serif leading-relaxed line-clamp-2">{s.description}</p>
-              <div className="flex items-center gap-2 text-[10px] font-black tracking-widest text-gray-600 font-sans">
+              <p className="text-[11px] text-gray-400 font-medium leading-relaxed line-clamp-2">{s.description}</p>
+              <div className="flex items-center gap-2 text-[10px] font-black tracking-widest text-[#AF944F]/60">
                 <Clock size={12} className="text-gold" /> {s.duration} MIN
               </div>
             </div>
@@ -653,37 +695,47 @@ export default function Admin() {
         {modal.isOpen && <ModernModal />}
       </AnimatePresence>
 
-      {/* SIDEBAR */}
+      {/* SIDEBAR OVERLAY FOR MOBILE */}
+      <AnimatePresence>
+        {!sidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSidebarOpen(true)}
+            className="fixed inset-0 bg-black/60 z-30 lg:hidden"
+          />
+        )}
+      </AnimatePresence>
+
       <motion.aside
         initial={false}
-        animate={{ width: sidebarOpen ? 260 : 72 }}
-        className="bg-noir text-white flex flex-col z-40 sticky top-0 h-screen border-r border-white/5 shrink-0"
+        animate={{ 
+          width: sidebarOpen ? (window.innerWidth < 1024 ? 0 : 260) : 280,
+          x: sidebarOpen ? (window.innerWidth < 1024 ? -280 : 0) : 0
+        }}
+        className="bg-noir text-white flex flex-col z-40 fixed lg:sticky top-0 h-screen border-r border-white/5 shrink-0 overflow-hidden"
       >
-        <div className="p-6 flex items-center justify-between overflow-hidden border-b border-white/5 h-20">
-          <AnimatePresence>
-            {sidebarOpen && (
-              <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-lg font-serif font-black tracking-tighter">
-                GS. <span className="text-gold">Admin</span>
-              </motion.span>
-            )}
-          </AnimatePresence>
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-white/5 transition-colors rounded-lg shrink-0 min-w-[36px] min-h-[36px] flex items-center justify-center">
-            {sidebarOpen ? <X size={18} /> : <Menu size={18} />}
+        <div className="p-6 flex items-center justify-between border-b border-white/5 h-20">
+          <span className="text-lg font-black tracking-tighter uppercase">
+            GS. <span className="text-gold">Admin</span>
+          </span>
+          <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 hover:bg-white/5 transition-colors rounded-lg">
+            <X size={20} />
           </button>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-3 py-6 space-y-2 overflow-y-auto">
           {menuItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              title={!sidebarOpen ? item.label : undefined}
-              className={`w-full flex items-center gap-4 p-4 transition-all duration-300 group relative rounded-2xl min-h-[48px]
-                ${activeTab === item.id ? 'bg-gold/10 text-gold' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
+              onClick={() => { setActiveTab(item.id); if (window.innerWidth < 1024) setSidebarOpen(true); }}
+              className={`w-full flex items-center gap-4 p-4 transition-all duration-300 group relative rounded-2xl min-h-[52px]
+                ${activeTab === item.id ? 'bg-gold text-black shadow-lg shadow-gold/20 font-black' : 'text-gray-500 hover:text-white hover:bg-white/5'}`}
             >
-              <item.icon size={20} className={activeTab === item.id ? 'text-gold shrink-0' : 'group-hover:text-gold transition-colors shrink-0'} />
-              {sidebarOpen && <span className="text-[10px] font-black uppercase tracking-[0.4em] font-sans">{item.label}</span>}
-              {activeTab === item.id && <motion.div layoutId="active-pill" className="absolute left-0 w-1 h-6 bg-gold rounded-full" />}
+              <item.icon size={20} className="shrink-0" />
+              <span className="text-[11px] uppercase tracking-[0.2em]">{item.label}</span>
+              {activeTab === item.id && <motion.div layoutId="active-pill" className="absolute left-0 w-1 h-6 bg-black/20 rounded-full" />}
             </button>
           ))}
         </nav>
@@ -709,12 +761,15 @@ export default function Admin() {
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
         <header className="h-20 border-b border-white/5 flex items-center justify-between px-6 md:px-10 bg-noir sticky top-0 z-30 shadow-2xl">
           <div className="flex items-center gap-4 overflow-hidden">
-            <h2 className="text-lg font-serif font-black uppercase tracking-tighter whitespace-nowrap text-white">
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden p-2 text-gold hover:bg-white/5 rounded-xl">
+              <Menu size={24} />
+            </button>
+            <h2 className="text-lg font-black uppercase tracking-tighter whitespace-nowrap text-white">
               {menuItems.find(m => m.id === activeTab)?.label}
             </h2>
           </div>
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-gold text-black flex items-center justify-center font-serif font-black rounded-xl text-sm shrink-0">
+            <div className="w-10 h-10 bg-gold text-black flex items-center justify-center font-black rounded-xl text-sm shrink-0 uppercase">
               {user.name[0]}
             </div>
           </div>

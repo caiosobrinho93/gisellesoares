@@ -279,9 +279,9 @@ export default function Agendamento() {
               </div>
 
               <div className="pt-10 border-t-2 border-dashed border-white/10 pb-4">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-white">Investimento</span>
-                  <span className="text-4xl font-serif font-black text-gold">R$ {(selectedService?.price || 0).toFixed(2)}</span>
+                <div className="flex justify-between items-center mb-10 gap-4 border-b border-white/5 pb-8">
+                  <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white">Total</span>
+                  <span className="text-2xl font-serif font-black text-gold">R$ {(selectedService?.price || 0).toFixed(2)}</span>
                 </div>
 
                 <Button

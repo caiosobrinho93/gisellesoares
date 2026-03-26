@@ -62,7 +62,7 @@ export default function Usuario() {
     }
     if (window.confirm('Tem certeza que deseja cancelar este atendimento?')) {
       cancelBooking(bookingId);
-      setUserBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: 'Cancelado' } : b));
+      setUserBookings(prev => prev.filter(b => b.id !== bookingId));
     }
   };
 
@@ -210,16 +210,17 @@ export default function Usuario() {
         {/* Tab: Meus Agendamentos */}
         {activeTab === 'agendamentos' && (
           <div className="space-y-10">
-            {userBookings.length === 0 ? (
+            {userBookings.filter(b => b.status === 'Confirmado' || b.status === 'Em Andamento').length === 0 ? (
               <div className="text-center p-20 md:p-32 bg-noir rounded-[40px] border border-white/5 shadow-premium">
                 <Calendar className="mx-auto text-white/5 mb-8" size={80} strokeWidth={1} />
-                <p className="text-gray-500 text-xl mb-10 font-light italic-serif">Você ainda não tem agendamentos.</p>
+                <p className="text-gray-500 text-xl mb-10 font-light italic-serif">Você ainda não tem agendamentos ativos.</p>
                 <Button as={Link} to="/agendar" variant="gold" size="xl" className="px-12 text-[10px] tracking-[0.4em]">Agendar Agora</Button>
               </div>
             ) : (
-              userBookings.map((b, i) => {
-                const canCancel = b.status !== 'Cancelado' && differenceInHours(new Date(b.datetime), new Date()) >= 6;
-                const statusColor = b.status === 'Cancelado' ? 'text-red-400 bg-red-500/10' : b.status === 'Concluído' ? 'text-green-400 bg-green-500/10' : 'text-gold bg-gold/10';
+              userBookings
+                .filter(b => b.status === 'Confirmado' || b.status === 'Em Andamento')
+                .map((b, i) => {
+                  const canCancel = differenceInHours(new Date(b.datetime), new Date()) >= 6;
                 return (
                   <motion.div
                     key={b.id}
@@ -227,35 +228,35 @@ export default function Usuario() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.08 }}
                   >
-                    <Card padding={false} className="p-8 md:p-12 hover:shadow-2xl transition-all duration-700 border border-black/5 rounded-[32px] md:rounded-[40px] bg-white">
+                    <Card padding={false} className="p-8 md:p-12 hover:shadow-2xl transition-all duration-700 border border-white/5 rounded-[32px] md:rounded-[40px] bg-noir shadow-premium">
                       <div className="flex flex-col md:flex-row justify-between items-start gap-8">
                         <div className="flex-1">
                           <div className="flex flex-wrap items-center gap-4 mb-6">
-                            <span className={`text-[10px] font-black uppercase tracking-[0.4em] px-4 py-2 rounded-full ${statusColor}`}>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] px-4 py-2 rounded-full text-gold bg-gold/10 border border-gold/20">
                               {b.status}
                             </span>
-                            {b.status === 'Confirmado' && <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />}
+                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                           </div>
-                          <h3 className="text-3xl md:text-5xl font-serif font-black text-[#0F1113] mb-6 tracking-tighter">{b.serviceName}</h3>
+                          <h3 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tighter uppercase">{b.serviceName}</h3>
                           <div className="flex flex-wrap gap-4">
-                            <div className="flex items-center gap-3 bg-gray-50 px-5 py-3 rounded-2xl border border-black/5">
-                              <Calendar size={16} className="text-[#AF944F] shrink-0" />
-                              <span className="text-[12px] font-black uppercase tracking-[0.15em] text-[#0F1113]">
+                            <div className="flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/10">
+                              <Calendar size={16} className="text-gold shrink-0" />
+                              <span className="text-[12px] font-black uppercase tracking-[0.15em] text-white">
                                 {b.datetime ? format(new Date(b.datetime), "dd 'de' MMMM", { locale: ptBR }) : '--'}
                               </span>
                             </div>
-                            <div className="flex items-center gap-3 bg-gray-50 px-5 py-3 rounded-2xl border border-black/5">
-                              <Clock size={16} className="text-[#AF944F] shrink-0" />
-                              <span className="text-[12px] font-black uppercase tracking-[0.15em] text-[#AF944F]">
+                            <div className="flex items-center gap-3 bg-black/40 px-5 py-3 rounded-2xl border border-white/10">
+                              <Clock size={16} className="text-gold shrink-0" />
+                              <span className="text-[12px] font-black uppercase tracking-[0.15em] text-gold">
                                 {b.datetime ? format(new Date(b.datetime), "HH:mm") : '--'}
                               </span>
                             </div>
                           </div>
                         </div>
-                        <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-6 pt-6 md:pt-0 border-t border-black/5 md:border-0">
+                        <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-6 pt-6 md:pt-0 border-t border-white/5 md:border-0">
                           <div className="text-left md:text-right">
-                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-400 mb-1">Valor</p>
-                            <p className="text-3xl md:text-5xl font-serif font-black text-[#0F1113]">R$ {(b.price || 0).toFixed(0)}</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-500 mb-1">Total</p>
+                            <p className="text-3xl md:text-5xl font-black text-gold">R$ {(b.price || 0).toFixed(0)}</p>
                           </div>
                           {b.status === 'Confirmado' && (
                             <button
