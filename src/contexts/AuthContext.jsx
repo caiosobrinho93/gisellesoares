@@ -9,14 +9,12 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Rehydrate session from localStorage
     const rehydrate = () => {
       const session = storage.get('session');
       if (session) {
         const users = storage.get('users', []);
         const found = users.find(u => u.id === session.id) ||
           (session.id === 'admin' ? defaultAdmin : null);
-        
         if (found) {
           setUser(found);
         } else {
@@ -25,9 +23,7 @@ export function AuthProvider({ children }) {
       }
       setLoading(false);
     };
-    
     rehydrate();
-    // Listen for storage changes (tabs sync)
     window.addEventListener('storage', rehydrate);
     return () => window.removeEventListener('storage', rehydrate);
   }, []);
@@ -46,7 +42,8 @@ export function AuthProvider({ children }) {
       role: 'client',
       balance: 0,
       createdAt: new Date().toISOString(),
-      preferredColor: null,
+      preferredColors: [],
+      avatar: null,
     };
     storage.set('users', [...users, newUser]);
     storage.set('session', { id: newUser.id });
@@ -55,7 +52,6 @@ export function AuthProvider({ children }) {
   };
 
   const login = ({ email, password }) => {
-    // Check admin
     if (email === defaultAdmin.email && password === defaultAdmin.password) {
       storage.set('session', { id: defaultAdmin.id });
       setUser(defaultAdmin);
@@ -75,12 +71,15 @@ export function AuthProvider({ children }) {
   };
 
   const updateUser = (updates) => {
-    if (!user) return;
+    if (!user) return { success: false };
     const users = storage.get('users', []);
     const updated = { ...user, ...updates };
     const newUsers = users.map(u => u.id === user.id ? updated : u);
     storage.set('users', newUsers);
+    // Also update session if needed
+    storage.set('session', { id: updated.id });
     setUser(updated);
+    return { success: true };
   };
 
   return (
