@@ -333,9 +333,19 @@ export default function Admin() {
           <Card key={s.id} padding={false} className="overflow-hidden border border-white/10 hover:border-gold/40 transition-all shadow-premium group rounded-[32px] bg-noir">
             <div className="h-48 bg-black relative">
               <img src={s.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 brightness-75 group-hover:brightness-100" alt={s.name} />
-              <div className="absolute top-4 right-4 flex gap-2">
-                <button onClick={() => setModal({ isOpen: true, type: 'service', data: s })} className="p-3 bg-black/40 backdrop-blur-xl text-white rounded-xl hover:bg-gold hover:text-black transition-all border border-white/10"><Edit2 size={14} /></button>
-                <button onClick={() => { if (window.confirm('Excluir serviço?')) deleteService(s.id); }} className="p-3 bg-black/40 backdrop-blur-xl text-white rounded-xl hover:bg-red-600 transition-all border border-white/10"><Trash2 size={14} /></button>
+              <div className="absolute top-4 right-4 flex gap-2 z-20">
+                <button onClick={() => setModal({ isOpen: true, type: 'service', data: s })} className="p-3 bg-black/60 backdrop-blur-xl text-white rounded-xl hover:bg-gold hover:text-black transition-all border border-white/10 shadow-lg"><Edit2 size={14} /></button>
+                <button 
+                  onClick={(e) => { 
+                    e.stopPropagation();
+                    if (window.confirm('Deseja realmente excluir este serviço? Esta ação não pode ser desfeita.')) {
+                      deleteService(s.id); 
+                    }
+                  }} 
+                  className="p-3 bg-black/60 backdrop-blur-xl text-white rounded-xl hover:bg-red-600 transition-all border border-white/10 shadow-lg"
+                >
+                  <Trash2 size={14} />
+                </button>
               </div>
             </div>
             <div className="p-8 space-y-4">

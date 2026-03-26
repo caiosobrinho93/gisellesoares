@@ -56,7 +56,11 @@ export function AppProvider({ children }) {
     saveServices(services.map(s => s.id === id ? { ...s, ...updates } : s));
   };
   const deleteService = (id) => {
-    saveServices(services.filter(s => s.id !== id));
+    setServices(prev => {
+      const filtered = prev.filter(s => s.id !== id);
+      storage.set('services', filtered);
+      return filtered;
+    });
   };
   const getService = (id) => services.find(s => s.id === id);
 
@@ -113,7 +117,11 @@ export function AppProvider({ children }) {
     return newCard;
   };
   const deleteGiftCard = (id) => {
-    saveGiftCards(giftCards.filter(c => c.id !== id));
+    setGiftCards(prev => {
+      const filtered = prev.filter(c => c.id !== id);
+      storage.set('giftcards', filtered);
+      return filtered;
+    });
   };
   const redeemGiftCard = (code, userId) => {
     const card = giftCards.find(c => c.code === code && c.status === 'active');
@@ -138,7 +146,11 @@ export function AppProvider({ children }) {
     saveGallery(gallery.map(img => img.id === id ? { ...img, ...updates } : img));
   };
   const deleteGalleryImage = (id) => {
-    saveGallery(gallery.filter(img => img.id !== id));
+    setGallery(prev => {
+      const filtered = prev.filter(img => img.id !== id);
+      storage.set('gallery', filtered);
+      return filtered;
+    });
   };
 
   // --- Finance ---
