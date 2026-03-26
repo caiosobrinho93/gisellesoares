@@ -112,7 +112,7 @@ export default function Usuario() {
         {/* Profile Header */}
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12 mb-16 md:mb-24 editorial-reveal">
           <div className="relative group">
-            <div className="w-28 h-28 md:w-48 md:h-48 bg-black text-white rounded-[40px] md:rounded-[48px] flex items-center justify-center text-4xl md:text-8xl font-serif font-black shadow-premium transition-all duration-1000 group-hover:scale-105 overflow-hidden border-4 border-white/5">
+            <div className="w-28 h-28 md:w-48 md:h-48 bg-black text-white rounded-[40px] md:rounded-[48px] flex items-center justify-center text-4xl md:text-8xl font-black shadow-premium transition-all duration-1000 group-hover:scale-105 overflow-hidden border-4 border-white/5">
               {user.avatar ? (
                 <img src={user.avatar} className="w-full h-full object-cover" alt={user.name} />
               ) : (
@@ -140,14 +140,14 @@ export default function Usuario() {
               </span>
               <div className="flex items-center gap-2 bg-noir text-gold px-5 py-2 rounded-full border border-white/5 shadow-xl w-fit mx-auto md:mx-0">
                 <DollarSign size={14} />
-                <span className="text-sm font-serif font-black">Saldo: R$ {(user.balance || 0).toFixed(2)}</span>
+                <span className="text-sm font-black">Saldo: R$ {(user.balance || 0).toFixed(2)}</span>
               </div>
             </div>
-            <h1 className="text-5xl md:text-9xl font-serif font-black text-white leading-[0.8] mb-6 tracking-tighter">
-              Olá, {user.name?.split(' ')[0] || 'Cliente'}<span className="italic-serif text-gold">.</span>
+            <h1 className="text-5xl md:text-9xl font-black text-white leading-[0.8] mb-6 tracking-tighter uppercase">
+              Olá, {user.name?.split(' ')[0] || 'Cliente'}<span className="text-gold">.</span>
             </h1>
             <div className="flex flex-wrap justify-center md:justify-start gap-8 items-center">
-              <p className="text-sm text-gray-500 font-light italic-serif">
+              <p className="text-sm text-gray-500 font-normal italic">
                 Membro desde {format(new Date(user.createdAt || Date.now()), "MMMM 'de' yyyy", { locale: ptBR })}
               </p>
               <button onClick={logout} className="text-[10px] font-black uppercase tracking-[0.5em] text-red-500 hover:text-red-400 flex items-center gap-2 transition-all">
@@ -168,8 +168,7 @@ export default function Usuario() {
               <div className="inline-flex items-center gap-3 text-gold text-[10px] font-black uppercase tracking-[0.4em] mb-4">
                 <CheckCircle2 size={16} /> Reserva Confirmada
               </div>
-              <p className="text-4xl md:text-5xl font-serif font-black text-white mb-3 uppercase tracking-tighter">Agenda Atualizada.</p>
-              <p className="text-base text-gray-500 font-light italic-serif">Sua sessão foi reservada. Até breve!</p>
+              <p className="text-base text-gray-500 font-normal italic">Sua sessão foi reservada. Até breve!</p>
             </div>
             <Button as={Link} to="/agendar" variant="gold" size="xl" className="px-12 shadow-xl relative z-10 hover:scale-105 transition-transform text-[10px] tracking-[0.4em]">Novo Agendamento</Button>
             <Sparkles className="absolute right-[-5%] top-[-10%] text-white/5 w-64 h-64 rotate-12" />
@@ -213,7 +212,7 @@ export default function Usuario() {
             {userBookings.filter(b => b.status === 'Confirmado' || b.status === 'Em Andamento').length === 0 ? (
               <div className="text-center p-20 md:p-32 bg-noir rounded-[40px] border border-white/5 shadow-premium">
                 <Calendar className="mx-auto text-white/5 mb-8" size={80} strokeWidth={1} />
-                <p className="text-gray-500 text-xl mb-10 font-light italic-serif">Você ainda não tem agendamentos ativos.</p>
+                <p className="text-gray-500 text-xl mb-10 font-normal italic">Você ainda não tem agendamentos ativos.</p>
                 <Button as={Link} to="/agendar" variant="gold" size="xl" className="px-12 text-[10px] tracking-[0.4em]">Agendar Agora</Button>
               </div>
             ) : (
@@ -287,7 +286,7 @@ export default function Usuario() {
           <div className="max-w-2xl">
             <Card padding={false} className="p-10 md:p-12 bg-noir border border-white/5 rounded-[40px] shadow-premium">
               <div className="flex justify-between items-center mb-10">
-                <h2 className="text-2xl font-serif font-black text-white">Dados Pessoais</h2>
+                <h2 className="text-2xl font-black text-white uppercase">Dados Pessoais</h2>
                 <button
                   onClick={() => setEditing(!editing)}
                   className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.4em] text-gold hover:text-white transition-all min-h-[44px] px-4"
@@ -375,7 +374,7 @@ export default function Usuario() {
                 </div>
                 <p className="text-[12px] font-black uppercase tracking-[0.5em] text-gold">Gift Cards</p>
               </div>
-              <p className="text-gray-500 font-light mb-8 italic-serif leading-relaxed">
+              <p className="text-gray-500 font-normal mb-8 italic leading-relaxed">
                 Transforme seu código em créditos para sua próxima sessão.
               </p>
               <div className="space-y-4">
@@ -409,7 +408,7 @@ export default function Usuario() {
                 <Heart size={28} className="text-gold" />
                 <p className="text-[11px] font-black uppercase tracking-[0.5em] text-white">Cores Favoritas</p>
               </div>
-              <p className="text-gray-500 font-light mb-8 italic-serif leading-relaxed">
+              <p className="text-gray-500 font-normal mb-8 italic leading-relaxed">
                 Suas preferências de cor ficam salvas para a profissional saber o que você gosta.
               </p>
               {user.favoriteColors?.length > 0 && (

@@ -50,10 +50,10 @@ export default function Esmaltes() {
                <div className="w-10 h-[1.5px] bg-[#AF944F] rounded-full" />
                <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#AF944F]">Curadoria</span>
             </div>
-            <h1 className="text-5xl md:text-8xl font-serif font-black text-white leading-tight mb-8">
-               Catálogo <span className="italic-serif text-[#AF944F]">Cromático</span>.
+            <h1 className="text-5xl md:text-8xl font-black text-white leading-tight mb-8 uppercase">
+               Catálogo <span className="text-[#AF944F]">Cromático</span>.
             </h1>
-            <p className="text-xl text-gray-400 font-light leading-relaxed italic-serif">
+            <p className="text-xl text-gray-400 font-normal leading-relaxed italic">
                Escolha suas cores favoritas — salvo no seu perfil para a profissional saber sua preferência.
             </p>
             {user && favorites.length > 0 && (
@@ -71,7 +71,7 @@ export default function Esmaltes() {
           {Object.entries(categories).map(([category, colors], catIdx) => (
             <div key={category} className="editorial-reveal" style={{ transitionDelay: `${catIdx * 150}ms` }}>
               <div className="flex items-baseline gap-8 mb-12 md:mb-16 border-b border-black/5 pb-8">
-                <h2 className="text-3xl md:text-5xl font-serif font-black tracking-tight uppercase">{category}</h2>
+                <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase">{category}</h2>
                 <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-gray-300">
                   {colors.length} {colors.length === 1 ? 'VARIANTE' : 'VARIANTES'}
                 </span>
@@ -133,7 +133,7 @@ export default function Esmaltes() {
             <div className="max-w-xl mx-auto bg-[#0F1113] text-white p-4 md:p-6 rounded-[32px] shadow-2xl flex items-center justify-between gap-4 border border-white/10 pointer-events-auto">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.5em] text-[#AF944F] mb-1">Selecionadas</p>
-                <p className="text-lg font-serif font-black">{favorites.length} {favorites.length === 1 ? 'cor' : 'cores'}</p>
+                <p className="text-lg font-black">{favorites.length} {favorites.length === 1 ? 'cor' : 'cores'}</p>
               </div>
               <div className="flex gap-3">
                 <button

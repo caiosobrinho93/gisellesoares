@@ -86,8 +86,8 @@ export default function Admin() {
             <div className="flex justify-between items-start mb-6 text-gray-500 group-hover:text-gold transition-colors">
               <s.icon size={20} />
             </div>
-            <p className="text-[10px] font-black font-sans uppercase tracking-[0.4em] text-gray-500 mb-2">{s.label}</p>
-            <p className="text-3xl md:text-4xl font-serif font-black tracking-tighter text-white">{s.value}</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 mb-2">{s.label}</p>
+            <p className="text-3xl md:text-4xl font-black tracking-tighter text-white">{s.value}</p>
           </div>
         ))}
       </div>
@@ -133,7 +133,7 @@ export default function Admin() {
           )}
         </div>
         <div className="bg-noir p-8 md:p-10 rounded-[28px] md:rounded-[32px] border border-white/5 shadow-premium">
-          <h3 className="text-2xl md:text-3xl font-serif font-black mb-8 text-white">Gift Cards <span className="italic-serif text-gold">Ativos</span></h3>
+          <h3 className="text-2xl md:text-3xl font-black mb-8 text-white uppercase">Gift Cards <span className="text-gold">Ativos</span></h3>
           <div className="space-y-4">
             {giftCards.filter(c => c.status === 'active').slice(0, 5).map(c => (
               <div key={c.id} className="flex items-center justify-between p-5 border border-white/5 rounded-2xl bg-black">
@@ -144,10 +144,10 @@ export default function Admin() {
                     <p className="text-[10px] text-gray-500 font-sans">{format(new Date(c.createdAt), "dd/MM/yy")}</p>
                   </div>
                 </div>
-                <p className="text-xl font-serif font-black text-gold">R$ {c.amount}</p>
+                <p className="text-xl font-black text-gold">R$ {c.amount}</p>
               </div>
             ))}
-            {giftCards.filter(c => c.status === 'active').length === 0 && <p className="text-center text-gray-500 italic-serif py-12">Nenhum gift card ativo.</p>}
+            {giftCards.filter(c => c.status === 'active').length === 0 && <p className="text-center text-gray-500 italic py-12">Nenhum gift card ativo.</p>}
           </div>
         </div>
       </div>
@@ -234,7 +234,7 @@ export default function Admin() {
   const ClientsSection = () => (
     <div className="bg-noir rounded-[32px] border border-white/5 shadow-premium overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="p-8 md:p-10 border-b border-white/5">
-        <h3 className="text-2xl md:text-3xl font-serif font-black text-white">Base de <span className="italic-serif text-gold">Clientes</span></h3>
+        <h3 className="text-2xl md:text-3xl font-black text-white uppercase">Base de <span className="text-gold">Clientes</span></h3>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-left">
@@ -258,7 +258,7 @@ export default function Admin() {
                 </td>
                 <td className="px-6 md:px-10 py-6 text-xs text-gray-400 font-sans hidden md:table-cell truncate max-w-[200px]">{u.email}</td>
                 <td className="px-6 md:px-10 py-6 text-xs text-gray-400 font-sans hidden sm:table-cell">{u.phone || 'N/A'}</td>
-                <td className="px-6 md:px-10 py-6 text-xs text-gray-500 font-light italic-serif hidden lg:table-cell">{format(new Date(u.createdAt || Date.now()), "dd/MM/yyyy")}</td>
+                <td className="px-6 md:px-10 py-6 text-xs text-gray-500 font-normal italic hidden lg:table-cell">{format(new Date(u.createdAt || Date.now()), "dd/MM/yyyy")}</td>
                 <td className="px-6 md:px-10 py-6 text-right" onClick={e => e.stopPropagation()}>
                   <button onClick={() => setModal({ isOpen: true, type: 'client', data: u })} className="p-2 text-gray-500 hover:text-white transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center ml-auto">
                     <Search size={16} />
@@ -268,7 +268,7 @@ export default function Admin() {
             ))}
           </tbody>
         </table>
-        {users.length === 0 && <p className="text-center text-gray-500 italic-serif py-16">Nenhum cliente cadastrado.</p>}
+        {users.length === 0 && <p className="text-center text-gray-500 italic py-16">Nenhum cliente cadastrado.</p>}
       </div>
     </div>
   );
@@ -277,8 +277,8 @@ export default function Admin() {
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex justify-between items-center bg-noir p-8 md:p-10 rounded-[32px] border border-white/5 shadow-premium">
         <div>
-          <h3 className="text-2xl md:text-3xl font-serif font-black text-white">Gift <span className="italic-serif text-gold">Cards</span></h3>
-          <p className="text-xs text-gray-500 font-light italic-serif mt-2">Gestão de códigos promocionais.</p>
+          <h3 className="text-2xl md:text-3xl font-black text-white uppercase">Gift <span className="text-gold">Cards</span></h3>
+          <p className="text-xs text-gray-500 font-normal italic mt-2">Gestão de códigos promocionais.</p>
         </div>
         <Button onClick={() => setModal({ isOpen: true, type: 'add-giftcard' })} variant="secondary" size="md" className="shadow-lg">
           <Plus size={16} className="mr-2" /> Gerar Novo
@@ -299,7 +299,7 @@ export default function Admin() {
             {giftCards.map(c => (
               <tr key={c.id} className="hover:bg-white/5 transition-colors">
                 <td className="px-6 md:px-10 py-6 text-xs font-black tracking-[0.2em] font-sans text-white">{c.code}</td>
-                <td className="px-6 md:px-10 py-6 font-serif font-black text-gold text-lg">R$ {c.amount.toFixed(2)}</td>
+                <td className="px-6 md:px-10 py-6 font-black text-gold text-lg">R$ {c.amount.toFixed(2)}</td>
                 <td className="px-6 md:px-10 py-6">
                   <span className={`text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full ${c.status === 'active' ? 'bg-green-500/10 text-green-400' : 'bg-white/5 text-gray-400'}`}>
                     {c.status === 'active' ? 'Ativo' : 'Utilizado'}
@@ -315,7 +315,7 @@ export default function Admin() {
             ))}
           </tbody>
         </table>
-        {giftCards.length === 0 && <p className="text-center text-gray-500 italic-serif py-16">Nenhum gift card criado.</p>}
+        {giftCards.length === 0 && <p className="text-center text-gray-500 italic py-16">Nenhum gift card criado.</p>}
       </div>
     </div>
   );
@@ -323,7 +323,7 @@ export default function Admin() {
   const ServicesSection = () => (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex justify-between items-center bg-noir p-6 md:p-10 rounded-[32px] border border-white/5 shadow-premium">
-        <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Catálogo de <span className="text-gold italic">Serviços</span></h3>
+        <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter">Catálogo de <span className="text-gold">Serviços</span></h3>
         <Button onClick={() => setModal({ isOpen: true, type: 'service' })} variant="secondary" size="md">
           <Plus size={16} className="mr-2" /> Novo
         </Button>
@@ -375,7 +375,7 @@ export default function Admin() {
     return (
       <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
         <div className="bg-noir p-8 md:p-10 rounded-[32px] border border-white/5 shadow-premium space-y-6">
-          <h3 className="text-2xl font-serif font-black text-white">Adicionar <span className="italic-serif text-gold">Imagem</span></h3>
+          <h3 className="text-2xl font-black text-white uppercase">Adicionar <span className="text-gold">Imagem</span></h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">URL da Imagem</label>
@@ -445,7 +445,7 @@ export default function Admin() {
             </div>
           ))}
         </div>
-        {gallery.length === 0 && <p className="text-center text-gray-500 italic-serif py-16">Galeria vazia.</p>}
+        {gallery.length === 0 && <p className="text-center text-gray-500 italic py-16">Galeria vazia.</p>}
       </div>
     );
   };
@@ -500,7 +500,7 @@ export default function Admin() {
           className="bg-[#1A1A1A] w-full sm:max-w-2xl rounded-t-[32px] sm:rounded-[32px] shadow-2xl relative overflow-hidden z-20 flex flex-col max-h-[92vh] border border-white/10"
         >
           <div className="p-8 border-b border-white/5 flex justify-between items-center bg-noir">
-            <h4 className="text-xl font-serif font-black text-white uppercase tracking-tighter">
+            <h4 className="text-xl font-black text-white uppercase tracking-tighter">
               {modal.type === 'service' ? (modal.data ? 'Editar Serviço' : 'Novo Serviço') :
                modal.type === 'booking' ? 'Detalhes do Atendimento' :
                modal.type === 'client' ? 'Perfil do Cliente' : 'Novo Gift Card'}
@@ -516,9 +516,9 @@ export default function Admin() {
               <div className="space-y-6">
                 {/* Client + Service info */}
                 <div className="flex items-center gap-5 p-5 bg-black/40 rounded-2xl border border-white/5">
-                  <div className="w-14 h-14 bg-gold/20 text-gold flex items-center justify-center text-2xl font-serif font-black rounded-2xl shrink-0">{formData.userName?.[0]}</div>
+                  <div className="w-14 h-14 bg-gold/20 text-gold flex items-center justify-center text-2xl font-black rounded-2xl shrink-0">{formData.userName?.[0]}</div>
                   <div>
-                    <h5 className="text-xl font-serif font-black text-white">{formData.userName}</h5>
+                    <h5 className="text-xl font-black text-white uppercase">{formData.userName}</h5>
                     <p className="text-xs text-gray-400 font-sans tracking-widest uppercase">{formData.serviceName}</p>
                   </div>
                 </div>
@@ -527,18 +527,18 @@ export default function Admin() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-5 bg-black/40 border border-white/5 rounded-2xl">
                     <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Data</p>
-                    <p className="text-lg font-serif font-black text-white">{format(new Date(formData.datetime), "dd 'de' MMMM", { locale: ptBR })}</p>
+                    <p className="text-lg font-black text-white">{format(new Date(formData.datetime), "dd 'de' MMMM", { locale: ptBR })}</p>
                   </div>
                   <div className="p-5 bg-black/40 border border-white/5 rounded-2xl">
                     <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Horário</p>
-                    <p className="text-lg font-serif font-black text-gold">{format(new Date(formData.datetime), "HH:mm")}</p>
+                    <p className="text-lg font-black text-gold">{format(new Date(formData.datetime), "HH:mm")}</p>
                   </div>
                 </div>
 
                 {/* Preço */}
                 <div className="p-5 bg-gold/5 border border-gold/20 rounded-2xl flex justify-between items-center">
                   <span className="text-[10px] font-black uppercase tracking-widest text-gold">Valor do Serviço</span>
-                  <span className="text-2xl font-serif font-black text-gold">R$ {(formData.price || 0).toFixed(2)}</span>
+                  <span className="text-2xl font-black text-gold">R$ {(formData.price || 0).toFixed(2)}</span>
                 </div>
 
                 {/* Status */}
@@ -615,7 +615,7 @@ export default function Admin() {
                 </div>
                 <div className="col-span-full space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Descrição</label>
-                  <textarea value={formData.description || ''} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full p-4 bg-black border border-white/5 text-white rounded-xl h-28 font-serif text-sm italic-serif focus:ring-1 focus:ring-gold outline-none resize-none" />
+                  <textarea value={formData.description || ''} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full p-4 bg-black border border-white/5 text-white rounded-xl h-28 font-normal text-sm italic focus:ring-1 focus:ring-gold outline-none resize-none" />
                 </div>
               </div>
             )}
@@ -623,11 +623,11 @@ export default function Admin() {
             {/* CLIENT MODAL */}
             {modal.type === 'client' && (
               <div className="space-y-6 text-center py-4">
-                <div className="w-20 h-20 mx-auto bg-gold/10 text-gold flex items-center justify-center text-4xl font-serif font-black rounded-[28px] shadow-premium mb-4">
+                <div className="w-20 h-20 mx-auto bg-gold/10 text-gold flex items-center justify-center text-4xl font-black rounded-[28px] shadow-premium mb-4">
                   {formData.name?.[0]}
                 </div>
-                <h5 className="text-3xl font-serif font-black text-white">{formData.name}</h5>
-                <p className="text-sm text-gray-400 font-light italic-serif">Membro desde {format(new Date(formData.createdAt || Date.now()), "MMMM 'de' yyyy", { locale: ptBR })}</p>
+                <h5 className="text-3xl font-black text-white uppercase">{formData.name}</h5>
+                <p className="text-sm text-gray-400 font-normal italic">Membro desde {format(new Date(formData.createdAt || Date.now()), "MMMM 'de' yyyy", { locale: ptBR })}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
                   <div className="p-5 bg-black/40 rounded-2xl border border-white/5">
                     <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">E-mail</p>
@@ -652,12 +652,12 @@ export default function Admin() {
               <div className="space-y-6">
                 <div className="p-10 bg-gold/5 rounded-[24px] border-2 border-dashed border-gold/20 text-center">
                   <Gift size={48} className="mx-auto mb-4 text-gold" />
-                  <h5 className="text-xl font-serif font-black text-white mb-2">Novo Vale Presente</h5>
-                  <p className="text-xs text-gray-400 font-light italic-serif max-w-xs mx-auto">Gere um código exclusivo para crédito em atendimentos.</p>
+                  <h5 className="text-xl font-black text-white mb-2 uppercase">Novo Vale Presente</h5>
+                  <p className="text-xs text-gray-400 font-normal italic max-w-xs mx-auto">Gere um código exclusivo para crédito em atendimentos.</p>
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Valor do Crédito (R$)</label>
-                  <input type="number" value={formData.amount || 50} onChange={e => setFormData({ ...formData, amount: e.target.value })} className="w-full p-5 bg-black/40 border border-white/10 rounded-2xl font-serif font-black text-3xl text-center text-white focus:ring-1 focus:ring-gold outline-none" />
+                  <input type="number" value={formData.amount || 50} onChange={e => setFormData({ ...formData, amount: e.target.value })} className="w-full p-5 bg-black/40 border border-white/10 rounded-2xl font-black text-3xl text-center text-white focus:ring-1 focus:ring-gold outline-none" />
                 </div>
               </div>
             )}

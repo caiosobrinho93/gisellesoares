@@ -24,10 +24,10 @@ export default function Galeria() {
                <div className="w-10 h-[1.5px] bg-[#AF944F] rounded-full" />
                <span className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#AF944F]">Portfólio</span>
             </div>
-            <h1 className="text-5xl md:text-8xl font-serif font-black text-[#0F1113] leading-none mb-8">
-               Nossos <span className="italic-serif text-[#AF944F]">Trabalhos</span>.
+            <h1 className="text-5xl md:text-8xl font-black text-[#0F1113] leading-none mb-8 uppercase">
+               Nossos <span className="text-[#AF944F]">Trabalhos</span>.
             </h1>
-            <p className="text-xl text-gray-400 font-light leading-relaxed max-w-2xl italic-serif">
+            <p className="text-xl text-gray-400 font-normal leading-relaxed max-w-2xl italic">
               Uma seleção dos nossos melhores resultados — precisão, cuidado e beleza em cada detalhe.
             </p>
           </div>
@@ -68,7 +68,7 @@ export default function Galeria() {
           ))}
         </div>
         {gallery.length === 0 && (
-          <div className="text-center py-32 text-gray-400 italic-serif">
+          <div className="text-center py-32 text-gray-400 italic">
             Nenhuma imagem na galeria ainda.
           </div>
         )}
@@ -100,7 +100,7 @@ export default function Galeria() {
             >
               <img src={selectedImg.url} alt={selectedImg.alt} className="w-full h-full object-contain rounded-[32px]" />
               <div className="mt-6 text-center">
-                 <p className="text-sm uppercase tracking-[0.5em] text-gray-400 font-serif italic-serif">{selectedImg.alt || 'Trabalho Giselle Soares'}</p>
+                 <p className="text-sm uppercase tracking-[0.5em] text-gray-400 font-normal italic">{selectedImg.alt || 'Trabalho Giselle Soares'}</p>
               </div>
             </motion.div>
           </motion.div>

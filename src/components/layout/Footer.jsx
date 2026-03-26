@@ -9,10 +9,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
           <div className="md:col-span-1">
             <Link to="/" className="flex flex-col mb-8">
-              <span className="text-2xl font-serif font-black tracking-tight">Giselle Soares</span>
+              <span className="text-2xl font-black tracking-tighter uppercase">Giselle Soares</span>
               <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#AF944F]">Curadoria de Unhas</span>
             </Link>
-            <p className="text-gray-400 text-sm font-light leading-relaxed italic-serif">
+            <p className="text-gray-400 text-sm font-normal leading-relaxed italic">
               Elevando a estética de unhas ao patamar de rituais de luxo e precisão técnica.
             </p>
           </div>
@@ -30,7 +30,7 @@ export default function Footer() {
 
           <div>
              <h4 className="text-[11px] font-bold uppercase tracking-[0.5em] text-[#AF944F] mb-10">Suporte</h4>
-             <ul className="space-y-6 text-sm font-light text-gray-400 italic-serif">
+             <ul className="space-y-6 text-sm font-normal text-gray-400 italic">
                 <li className="flex items-center gap-4"><Phone size={16} /> (17) 99123-4567</li>
                 <li className="flex items-center gap-4"><Mail size={16} /> contato@gisellesoares.com.br</li>
                 <li className="flex items-center gap-4"><MapPin size={16} /> Votuporanga, SP</li>

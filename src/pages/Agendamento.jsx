@@ -83,11 +83,11 @@ export default function Agendamento() {
             <span className="text-[11px] font-bold uppercase tracking-[0.6em] text-gold">Reserva de Atendimento</span>
             <div className="w-12 h-[1px] bg-gold" />
           </div>
-          <h1 className="text-5xl md:text-8xl font-serif font-black text-white mb-8 tracking-tighter">
+          <h1 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter uppercase">
             Sua Experiência <br />
-            Começa <span className="italic-serif text-gold">Agora.</span>
+            Começa <span className="text-gold">Agora.</span>
           </h1>
-          <p className="text-xl text-gray-500 font-light italic-serif max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-500 font-normal italic max-w-2xl mx-auto leading-relaxed">
             Selecione o processo desejado e reserve um momento de exclusividade em nossa curadoria.
           </p>
         </div>
@@ -104,7 +104,7 @@ export default function Agendamento() {
                 className="space-y-10"
               >
                 <div className="flex items-center gap-6 mb-10 border-b border-white/5 pb-8 font-black uppercase tracking-tight text-3xl">
-                  <div className="w-12 h-12 bg-black text-gold rounded-[16px] flex items-center justify-center font-serif shadow-premium border border-gold/20">1</div>
+                  <div className="w-12 h-12 bg-black text-gold rounded-[16px] flex items-center justify-center font-black shadow-premium border border-gold/20">1</div>
                   Escolha o Processo
                 </div>
 
@@ -123,15 +123,15 @@ export default function Agendamento() {
                         <div className="relative h-48 overflow-hidden">
                           <img src={s.image} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 brightness-75 group-hover:brightness-100" alt={s.name} />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                          <div className="absolute bottom-6 left-6 text-white text-xl font-serif font-black uppercase tracking-widest">{s.name}</div>
+                          <div className="absolute bottom-6 left-6 text-white text-xl font-black uppercase tracking-widest">{s.name}</div>
                         </div>
                         <div className="p-10">
-                          <p className="text-xs text-gray-500 font-light italic-serif leading-relaxed mb-6 line-clamp-2">{s.description}</p>
+                          <p className="text-xs text-gray-500 font-normal italic leading-relaxed mb-6 line-clamp-2">{s.description}</p>
                           <div className="flex justify-between items-center">
                             <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gold">
                               <Clock size={14} /> {formatDuration(s.duration)}
                             </div>
-                            <span className="text-xl font-serif font-black text-white">R$ {s.price}</span>
+                            <span className="text-xl font-black text-white">R$ {s.price}</span>
                           </div>
                         </div>
                       </Card>
@@ -151,13 +151,13 @@ export default function Agendamento() {
                   <button onClick={() => { setStep(1); }} className="p-3 bg-noir rounded-xl border border-white/5 hover:bg-gold hover:text-black transition-all shadow-premium text-white">
                     <ChevronLeft size={20} />
                   </button>
-                  <div className="w-12 h-12 bg-black text-gold rounded-[16px] flex items-center justify-center font-serif shadow-premium border border-gold/20">2</div>
+                  <div className="w-12 h-12 bg-black text-gold rounded-[16px] flex items-center justify-center font-black shadow-premium border border-gold/20">2</div>
                   Escolha a Data
                 </div>
 
                 <div className="bg-noir p-10 rounded-[24px] shadow-premium border border-white/5">
                   <div className="flex items-center justify-between mb-12 px-2">
-                    <h3 className="text-2xl font-serif font-black uppercase tracking-tight text-white">{format(currentMonth, 'MMMM yyyy', { locale: ptBR })}</h3>
+                    <h3 className="text-2xl font-black uppercase tracking-tight text-white">{format(currentMonth, 'MMMM yyyy', { locale: ptBR })}</h3>
                     <div className="flex gap-4">
                       <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="p-3 hover:bg-white/5 rounded-xl transition-all border border-white/5 text-white"><ChevronLeft size={16} /></button>
                       <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="p-3 hover:bg-white/5 rounded-xl transition-all border border-white/5 text-white"><ChevronRight size={16} /></button>
@@ -208,7 +208,7 @@ export default function Agendamento() {
                   <button onClick={() => { setStep(2); setSelectedSlot(null); }} className="p-3 bg-noir rounded-xl border border-white/5 hover:bg-gold hover:text-black transition-all shadow-premium text-white">
                     <ChevronLeft size={20} />
                   </button>
-                  <div className="w-12 h-12 bg-black text-gold rounded-[16px] flex items-center justify-center font-serif shadow-premium border border-gold/20">3</div>
+                  <div className="w-12 h-12 bg-black text-gold rounded-[16px] flex items-center justify-center font-black shadow-premium border border-gold/20">3</div>
                   Escolha o Horário
                 </div>
 
@@ -231,7 +231,7 @@ export default function Agendamento() {
                 {slots.length === 0 && (
                   <div className="p-12 bg-white rounded-[24px] text-center border border-black/5 shadow-premium">
                     <Info className="mx-auto mb-6 text-gray-300" size={32} />
-                    <p className="text-gray-400 italic-serif text-sm">Sem horários disponíveis para esta data exclusiva.</p>
+                    <p className="text-gray-400 italic text-sm">Sem horários disponíveis para esta data exclusiva.</p>
                   </div>
                 )}
               </motion.div>
@@ -252,13 +252,13 @@ export default function Agendamento() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 <div className="absolute bottom-4 left-6">
                   <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-gold mb-1">Especialista</p>
-                  <p className="text-xl font-serif font-black text-white italic-serif">Giselle Soares</p>
+                  <p className="text-xl font-black text-white italic">Giselle Soares</p>
                 </div>
               </div>
 
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-gray-500 mb-4 block">Processo Selecionado</span>
-                <h3 className="text-2xl font-serif font-black uppercase tracking-tight text-white">{selectedService?.name || 'Aguardando Seleção'}</h3>
+                <h3 className="text-2xl font-black uppercase tracking-tight text-white">{selectedService?.name || 'Aguardando Seleção'}</h3>
               </div>
 
               <div className="space-y-6 pt-10 border-t border-white/5">
@@ -273,7 +273,7 @@ export default function Agendamento() {
                 {selectedSlot && (
                   <div className="flex justify-between items-center text-gold bg-gold/5 p-4 rounded-xl border border-gold/20">
                     <span className="text-[10px] font-bold uppercase tracking-[0.4em]">Horário Confirmado</span>
-                    <span className="text-lg font-serif font-black">{selectedSlot.time}</span>
+                    <span className="text-lg font-black">{selectedSlot.time}</span>
                   </div>
                 )}
               </div>
@@ -281,7 +281,7 @@ export default function Agendamento() {
               <div className="pt-10 border-t-2 border-dashed border-white/10 pb-4">
                 <div className="flex justify-between items-center mb-10 gap-4 border-b border-white/5 pb-8">
                   <span className="text-[11px] font-black uppercase tracking-[0.4em] text-white">Total</span>
-                  <span className="text-2xl font-serif font-black text-gold">R$ {(selectedService?.price || 0).toFixed(2)}</span>
+                  <span className="text-2xl font-black text-gold">R$ {(selectedService?.price || 0).toFixed(2)}</span>
                 </div>
 
                 <Button
@@ -298,7 +298,7 @@ export default function Agendamento() {
 
               <div className="bg-black/40 p-8 rounded-[20px] flex gap-4 items-start border border-white/5">
                 <ShieldCheck className="text-gold shrink-0" size={20} />
-                <p className="text-[10px] text-gray-500 font-light italic-serif leading-relaxed">
+                <p className="text-[10px] text-gray-500 font-normal italic leading-relaxed">
                   Sua satisfação e segurança são nossas prioridades absolutas. Equipamentos esterilizados e equipe altamente treinada.
                 </p>
               </div>
