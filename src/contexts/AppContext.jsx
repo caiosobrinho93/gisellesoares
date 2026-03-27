@@ -17,7 +17,7 @@ export function AppProvider({ children }) {
     const savedServices = storage.get('services', defaultServices);
     const savedBookings = storage.get('bookings', []);
     const savedGallery = storage.get('gallery', initialGallery);
-    const savedGiftCards = storage.get('giftCards', []);
+    const savedGiftCards = storage.get('giftcards', []); // Padronizado para minúsculo
     const savedUsers = storage.get('users', []);
     setServices(savedServices);
     setBookings(savedBookings);
@@ -45,6 +45,10 @@ export function AppProvider({ children }) {
   const saveServices = (newServices) => {
     setServices(newServices);
     storage.set('services', newServices);
+    notifySync('services');
+  };
+  const notifySync = (key) => {
+    window.dispatchEvent(new StorageEvent('storage', { key }));
   };
   const refreshUsers = () => setUsers(storage.get('users', []));
   const refreshBookings = () => setBookings(storage.get('bookings', []));
@@ -78,18 +82,32 @@ export function AppProvider({ children }) {
       sessionNote: '',
       createdAt: new Date().toISOString(),
     };
-    const newList = [...bookings, newBooking];
-    saveBookings(newList);
+    
+    setBookings(prev => {
+      const updated = [...prev, newBooking];
+      storage.set('bookings', updated);
+      notifySync('bookings');
+      return updated;
+    });
+    
     return newBooking;
   };
   const updateBooking = (id, updates) => {
-    saveBookings(bookings.map(b => b.id === id ? { ...b, ...updates } : b));
+    setBookings(prev => {
+      const updated = prev.map(b => b.id === id ? { ...b, ...updates } : b);
+      storage.set('bookings', updated);
+      return updated;
+    });
   };
   const cancelBooking = (id) => {
     updateBooking(id, { status: 'Cancelado' });
   };
   const deleteBooking = (id) => {
-    saveBookings(bookings.filter(b => b.id !== id));
+    setBookings(prev => {
+      const updated = prev.filter(b => b.id !== id);
+      storage.set('bookings', updated);
+      return updated;
+    });
   };
   const completeBooking = (id) => {
     updateBooking(id, { status: 'Concluído' });
@@ -113,7 +131,11 @@ export function AppProvider({ children }) {
       status: 'active',
       createdAt: new Date().toISOString(),
     };
-    saveGiftCards([...giftCards, newCard]);
+    setGiftCards(prev => {
+      const updated = [...prev, newCard];
+      storage.set('giftcards', updated);
+      return updated;
+    });
     return newCard;
   };
   const deleteGiftCard = (id) => {
@@ -124,13 +146,20 @@ export function AppProvider({ children }) {
     });
   };
   const redeemGiftCard = (code, userId) => {
-    const card = giftCards.find(c => c.code === code && c.status === 'active');
-    if (!card) return { success: false, error: 'Código inválido ou já utilizado.' };
-    saveGiftCards(giftCards.map(c => c.code === code
-      ? { ...c, status: 'redeemed', redeemedBy: userId, redeemedAt: new Date().toISOString() }
-      : c
-    ));
-    return { success: true, amount: card.amount, message: `Gift card de R$ ${card.amount} resgatado com sucesso!` };
+    let result = { success: false, error: 'Código inválido ou já utilizado.' };
+    setGiftCards(prev => {
+      const card = prev.find(c => c.code === code && c.status === 'active');
+      if (!card) return prev;
+      
+      result = { success: true, amount: card.amount, message: `Gift card de R$ ${card.amount} resgatado com sucesso!` };
+      const updated = prev.map(c => c.code === code
+        ? { ...c, status: 'redeemed', redeemedBy: userId, redeemedAt: new Date().toISOString() }
+        : c
+      );
+      storage.set('giftcards', updated);
+      return updated;
+    });
+    return result;
   };
 
   // --- Gallery ---

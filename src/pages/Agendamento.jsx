@@ -73,6 +73,7 @@ export default function Agendamento() {
       userName: user.name,
       serviceId: selectedService.id,
       serviceName: selectedService.name,
+      duration: selectedService.duration,
       datetime: selectedSlot.datetime,
       price: selectedService.price,
       status: 'Confirmado'
